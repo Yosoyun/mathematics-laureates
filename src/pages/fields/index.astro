@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { fields, laureatesForField } from "@lib/catalog";
+---
+
+<BaseLayout
+  title="Research Fields"
+  description="Explore major mathematical fields represented by the awards archive."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Research-field explorer</p>
+    <h1 class="section-title mt-3">Fields, concepts, and pathways</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      This field map is deliberately textual first, so it remains usable without
+      visualisation support.
+    </p>
+    <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {
+        fields.map((field) => (
+          <article class="card p-5">
+            <p class="text-sm font-bold text-muted">
+              {laureatesForField(field.id).length} linked profiles
+            </p>
+            <h2 class="mt-3 font-display text-3xl">
+              <a href={`/fields/${field.slug}`}>{field.name}</a>
+            </h2>
+            <p class="mt-3 text-sm leading-6 text-muted">{field.summary}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

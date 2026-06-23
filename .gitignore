@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+playwright-report/
+test-results/
+coverage/
+public/search-index.json
+pnpm-debug.log*
+.DS_Store

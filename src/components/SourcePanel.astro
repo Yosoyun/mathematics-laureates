@@ -1,0 +1,40 @@
+---
+import { sourceMap } from "@lib/catalog";
+
+interface Props {
+  sourceIds: string[];
+  title?: string;
+}
+
+const sources = sourceMap();
+const sourceIds = [...new Set(Astro.props.sourceIds)];
+const title = Astro.props.title ?? "Sources";
+---
+
+<aside class="card p-5">
+  <h2 class="font-display text-2xl">{title}</h2>
+  <ol class="mt-4 space-y-3 text-sm leading-6">
+    {
+      sourceIds.map((sourceId) => {
+        const source = sources.get(sourceId);
+        if (!source) return null;
+        return (
+          <li>
+            <a
+              class="font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
+              href={source.url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {source.title}
+            </a>
+            <span class="block text-muted">
+              {source.publisher} · {source.type} · accessed{" "}
+              {source.accessedDate}
+            </span>
+          </li>
+        );
+      })
+    }
+  </ol>
+</aside>

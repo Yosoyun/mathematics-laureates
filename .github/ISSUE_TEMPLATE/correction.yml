@@ -1,0 +1,26 @@
+name: Data correction
+description: Report a sourced correction to an award, winner, or profile record.
+title: "Correction: "
+labels: ["data", "correction"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page or record
+      description: URL or slug of the affected record.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Correction
+      description: State the current value, proposed value, and why it should change.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Provide official or authoritative source URLs.
+    validations:
+      required: true

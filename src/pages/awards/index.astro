@@ -1,0 +1,66 @@
+---
+import AwardCard from "@components/AwardCard.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awards } from "@lib/catalog";
+
+const categories = [
+  ...new Set(awards.flatMap((award) => award.categories)),
+].sort();
+---
+
+<BaseLayout
+  title="Awards"
+  description="Browse major mathematics and statistics awards with sourced metadata and transparent winner-list status."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Awards directory</p>
+    <h1 class="section-title mt-3">Major mathematics and statistics awards</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      Every required award is represented with official sources, route support,
+      metadata, and an explicit winner-list completeness label.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-2" aria-label="Award category filters">
+      <button
+        class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
+        type="button"
+        data-award-filter="all">All</button
+      >
+      {
+        categories.map((category) => (
+          <button
+            class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
+            type="button"
+            data-award-filter={category}
+          >
+            {category}
+          </button>
+        ))
+      }
+    </div>
+    <div class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3" data-award-grid>
+      {
+        awards.map((award) => (
+          <div data-award-categories={award.categories.join(" ")}>
+            <AwardCard award={award} />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+  <script>
+    const buttons = document.querySelectorAll("[data-award-filter]");
+    const cards = document.querySelectorAll("[data-award-categories]");
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        const filter = button.getAttribute("data-award-filter");
+        for (const card of cards) {
+          const categories = card.getAttribute("data-award-categories") ?? "";
+          card.classList.toggle(
+            "hidden",
+            filter !== "all" && !categories.includes(filter ?? ""),
+          );
+        }
+      });
+    }
+  </script>
+</BaseLayout>

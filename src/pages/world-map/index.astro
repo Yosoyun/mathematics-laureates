@@ -1,0 +1,167 @@
+---
+import "leaflet/dist/leaflet.css";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awards, laureates } from "@lib/catalog";
+
+const awardLocations = awards.map((award) => ({
+  mode: "Awarding organisation",
+  name: award.name,
+  context: award.organisation,
+  region: award.countryOrRegion ?? "International",
+}));
+
+const institutionLocations = laureates.flatMap((laureate) =>
+  (laureate.institutions ?? []).map((institution) => ({
+    mode: "Working institution",
+    name: laureate.fullName,
+    context: institution.name,
+    region: institution.countryOrRegion ?? "Unknown",
+  })),
+);
+
+const rows = [...awardLocations, ...institutionLocations].slice(0, 120);
+const markerData = [
+  {
+    label: "Norway",
+    lat: 60.472,
+    lon: 8.468,
+    count: awards.filter((award) => award.countryOrRegion === "Norway").length,
+  },
+  {
+    label: "United States",
+    lat: 39.8283,
+    lon: -98.5795,
+    count:
+      awards.filter((award) => award.countryOrRegion === "United States")
+        .length +
+      institutionLocations.filter((item) =>
+        item.region.includes("United States"),
+      ).length,
+  },
+  {
+    label: "United Kingdom",
+    lat: 55.3781,
+    lon: -3.436,
+    count:
+      awards.filter((award) => award.countryOrRegion === "United Kingdom")
+        .length +
+      institutionLocations.filter((item) =>
+        item.region.includes("United Kingdom"),
+      ).length,
+  },
+  {
+    label: "France",
+    lat: 46.2276,
+    lon: 2.2137,
+    count:
+      awards.filter((award) => award.countryOrRegion === "France").length +
+      institutionLocations.filter((item) => item.region.includes("France"))
+        .length,
+  },
+  {
+    label: "Switzerland",
+    lat: 46.8182,
+    lon: 8.2275,
+    count: institutionLocations.filter((item) =>
+      item.region.includes("Switzerland"),
+    ).length,
+  },
+  {
+    label: "Germany",
+    lat: 51.1657,
+    lon: 10.4515,
+    count: institutionLocations.filter((item) =>
+      item.region.includes("Germany"),
+    ).length,
+  },
+  {
+    label: "Japan",
+    lat: 36.2048,
+    lon: 138.2529,
+    count: institutionLocations.filter((item) => item.region.includes("Japan"))
+      .length,
+  },
+  {
+    label: "International",
+    lat: 20,
+    lon: 0,
+    count: awards.filter((award) => award.countryOrRegion === "International")
+      .length,
+  },
+].filter((item) => item.count > 0);
+---
+
+<BaseLayout
+  title="World Map"
+  description="Geographic exploration with separate award organisation and institution views."
+>
+  <section class="container py-14">
+    <p class="eyebrow">World map</p>
+    <h1 class="section-title mt-3">Geography without conflation</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      The map separates award organisation region from working institution.
+      Birthplace and national affiliation require deeper source verification
+      before being plotted.
+    </p>
+    <div
+      id="map"
+      class="mt-8 h-[32rem] rounded-lg border border-[var(--line)]"
+      data-markers={JSON.stringify(markerData)}
+    >
+    </div>
+    <noscript
+      ><p class="mt-4 rounded-lg border border-[var(--line)] p-4 text-muted">
+        JavaScript is disabled, so the accessible table below is the map
+        fallback.
+      </p></noscript
+    >
+    <div class="table-wrap mt-8">
+      <table>
+        <caption class="sr-only">Geographic fallback table</caption>
+        <thead
+          ><tr><th>Mode</th><th>Name</th><th>Context</th><th>Region</th></tr
+          ></thead
+        >
+        <tbody
+          >{
+            rows.map((row) => (
+              <tr>
+                <>
+                  <td>{row.mode}</td>
+                  <td>{row.name}</td>
+                  <td>{row.context}</td>
+                  <td>{row.region}</td>
+                </>
+              </tr>
+            ))
+          }</tbody
+        >
+      </table>
+    </div>
+  </section>
+  <script>
+    const container = document.getElementById("map");
+    if (container) {
+      const L = await import("leaflet");
+      const map = L.map(container).setView([25, 0], 2);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 6,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+      const markers = JSON.parse(container.dataset.markers ?? "[]");
+      for (const marker of markers) {
+        L.circleMarker([marker.lat, marker.lon], {
+          radius: Math.max(7, Math.min(22, marker.count + 5)),
+          color: "#8F6E3B",
+          fillColor: "#B6924A",
+          fillOpacity: 0.72,
+        })
+          .addTo(map)
+          .bindPopup(
+            `${marker.label}: ${marker.count} record${marker.count === 1 ? "" : "s"}`,
+          );
+      }
+    }
+  </script>
+</BaseLayout>

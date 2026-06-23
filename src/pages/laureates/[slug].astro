@@ -1,0 +1,142 @@
+---
+import CompletenessBadge from "@components/CompletenessBadge.astro";
+import LaureateCard from "@components/LaureateCard.astro";
+import SourcePanel from "@components/SourcePanel.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awardMap, fieldMap, laureates, relatedLaureates } from "@lib/catalog";
+
+export function getStaticPaths() {
+  return laureates.map((laureate) => ({
+    params: { slug: laureate.slug },
+    props: { laureate },
+  }));
+}
+
+const { laureate } = Astro.props;
+const awards = awardMap();
+const fields = fieldMap();
+const related = relatedLaureates(laureate);
+const allSourceIds = [
+  ...new Set(
+    laureate.sourceIds.concat(
+      laureate.awardRecords.flatMap((record) => record.sourceIds),
+      laureate.institutions?.flatMap((item) => item.sourceIds) ?? [],
+    ),
+  ),
+];
+---
+
+<BaseLayout
+  title={laureate.fullName}
+  description={laureate.majorContributions[0]}
+>
+  <section class="container py-12">
+    <nav class="text-sm text-muted" aria-label="Breadcrumb">
+      <a href="/laureates">Laureates</a> / {laureate.fullName}
+    </nav>
+    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
+      <div>
+        <p class="eyebrow">Laureate profile</p>
+        <h1 class="section-title mt-3">{laureate.fullName}</h1>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <CompletenessBadge status={laureate.completenessStatus} />
+          {
+            laureate.researchFieldIds.map((fieldId) => (
+              <a
+                class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-sm font-bold"
+                href={`/fields/${fields.get(fieldId)?.slug}`}
+              >
+                {fields.get(fieldId)?.name}
+              </a>
+            ))
+          }
+        </div>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
+          {laureate.biography}
+        </p>
+      </div>
+      <div class="card p-5">
+        <div
+          class="grid aspect-square place-items-center rounded-lg bg-[var(--surface-muted)] font-display text-7xl"
+          aria-label={`Missing portrait placeholder for ${laureate.fullName}`}
+        >
+          {laureate.fullName.slice(0, 1)}
+        </div>
+        <p class="mt-4 text-sm text-muted">
+          Portrait omitted until licence metadata is verified.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container grid gap-8 py-8 lg:grid-cols-[1fr_22rem]">
+    <article class="prose-archive">
+      <h2 class="font-display text-3xl">Award records</h2>
+      <div class="table-wrap mt-4">
+        <table>
+          <caption class="sr-only"
+            >Award records for {laureate.fullName}</caption
+          >
+          <thead
+            ><tr><th>Year</th><th>Award</th><th>Citation status</th></tr></thead
+          >
+          <tbody>
+            {
+              laureate.awardRecords.map((record) => (
+                <tr>
+                  <>
+                    <td>{record.year}</td>
+                    <td>
+                      <a
+                        class="font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
+                        href={`/awards/${awards.get(record.awardId)?.slug}`}
+                      >
+                        {awards.get(record.awardId)?.name}
+                      </a>
+                    </td>
+                    <td>{record.citation ?? "See official source"}</td>
+                  </>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="mt-10 font-display text-3xl">Major contribution</h2>
+      <p>{laureate.majorContributions.join("; ")}.</p>
+
+      <h2 class="mt-10 font-display text-3xl">Multi-level explanation</h2>
+      <div class="mt-4 grid gap-4">
+        <section class="card p-5">
+          <h3 class="font-bold">Plain-language</h3><p class="mt-2">
+            {laureate.explanation.plain}
+          </p>
+        </section>
+        <section class="card p-5">
+          <h3 class="font-bold">Student level</h3><p class="mt-2">
+            {laureate.explanation.student}
+          </p>
+        </section>
+        <section class="card p-5">
+          <h3 class="font-bold">Advanced context</h3><p class="mt-2">
+            {laureate.explanation.advanced}
+          </p>
+        </section>
+      </div>
+
+      <h2 class="mt-10 font-display text-3xl">Prerequisites</h2>
+      <ul>
+        {laureate.explanation.prerequisites.map((item) => <li>{item}</li>)}
+      </ul>
+    </article>
+    <SourcePanel sourceIds={allSourceIds} />
+  </section>
+
+  <section class="container py-8">
+    <h2 class="font-display text-3xl">Related profiles</h2>
+    <div class="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {related.map((item) => <LaureateCard laureate={item} />)}
+    </div>
+  </section>
+</BaseLayout>

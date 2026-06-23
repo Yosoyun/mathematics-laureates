@@ -1,0 +1,31 @@
+---
+import CompletenessBadge from "@components/CompletenessBadge.astro";
+import type { Award } from "@data/schema";
+
+interface Props {
+  award: Award;
+}
+
+const { award } = Astro.props;
+---
+
+<article class="card flex h-full flex-col gap-4 p-5">
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <p class="text-sm font-bold text-muted">{award.organisation}</p>
+    <CompletenessBadge status={award.winnerListStatus} />
+  </div>
+  <h2 class="font-display text-3xl leading-none">
+    <a href={`/awards/${award.slug}`}>{award.name}</a>
+  </h2>
+  <p class="line-clamp-4 text-sm leading-6 text-muted">{award.description}</p>
+  <dl class="mt-auto grid grid-cols-2 gap-3 text-sm">
+    <div>
+      <dt class="font-bold">Established</dt>
+      <dd class="text-muted">{award.establishedYear}</dd>
+    </div>
+    <div>
+      <dt class="font-bold">Frequency</dt>
+      <dd class="text-muted">{award.frequency}</dd>
+    </div>
+  </dl>
+</article>

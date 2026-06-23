@@ -1,0 +1,84 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awardMap, awards, winnerRecords } from "@lib/catalog";
+
+const awardById = awardMap();
+const events = [
+  ...awards.map((award) => ({
+    year: award.establishedYear,
+    type: "Award established",
+    title: award.name,
+    href: `/awards/${award.slug}`,
+    detail: award.organisation,
+  })),
+  ...winnerRecords.map((record) => ({
+    year: record.year,
+    type: "Winner record",
+    title: record.recipientNames.join(", "),
+    href: `/awards/${awardById.get(record.awardId)?.slug}`,
+    detail: awardById.get(record.awardId)?.name ?? record.awardId,
+  })),
+].sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
+---
+
+<BaseLayout
+  title="Timeline"
+  description="Timeline of mathematics award establishments and winner records."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Timeline</p>
+    <h1 class="section-title mt-3">Awards, people, and eras</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      The timeline has both a visual track and the accessible table below.
+      Records with partial data remain labelled through their linked award
+      pages.
+    </p>
+    <div class="mt-10 grid gap-4">
+      {
+        events.map((event) => (
+          <article class="grid gap-3 border-l-2 border-[var(--accent)] py-2 pl-5 sm:grid-cols-[6rem_1fr]">
+            <>
+              <p class="font-display text-3xl">{event.year}</p>
+              <div>
+                <>
+                  <p class="text-xs font-bold uppercase tracking-wide text-muted">
+                    {event.type}
+                  </p>
+                  <h2 class="font-display text-2xl">
+                    <a href={event.href}>{event.title}</a>
+                  </h2>
+                  <p class="text-sm text-muted">{event.detail}</p>
+                </>
+              </div>
+            </>
+          </article>
+        ))
+      }
+    </div>
+    <div class="table-wrap mt-12">
+      <table>
+        <caption class="sr-only">Accessible event table</caption>
+        <thead
+          ><tr><th>Year</th><th>Type</th><th>Title</th><th>Context</th></tr
+          ></thead
+        >
+        <tbody
+          >{
+            events.map((event) => (
+              <tr>
+                <>
+                  <td>{event.year}</td>
+                  <td>{event.type}</td>
+                  <td>
+                    <a href={event.href}>{event.title}</a>
+                  </td>
+                  <td>{event.detail}</td>
+                </>
+              </tr>
+            ))
+          }</tbody
+        >
+      </table>
+    </div>
+  </section>
+</BaseLayout>

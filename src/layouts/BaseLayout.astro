@@ -1,0 +1,97 @@
+---
+import Navigation from "@components/Navigation.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const siteName = "The Laureate Equation";
+const title = Astro.props.title
+  ? `${Astro.props.title} | ${siteName}`
+  : siteName;
+const description =
+  Astro.props.description ??
+  "A sourced archive of major mathematics and statistics awards, laureates, fields, and research ideas.";
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/icons/medal.svg" type="image/svg+xml" />
+    <script is:inline>
+      const savedTheme = localStorage.getItem("theme");
+      const preferredDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      document.documentElement.dataset.theme =
+        savedTheme || (preferredDark ? "dark" : "light");
+    </script>
+  </head>
+  <body>
+    <div class="reading-progress no-print" id="reading-progress"></div>
+    <a
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ivory focus:px-4 focus:py-2 focus:text-ink"
+      href="#main">Skip to content</a
+    >
+    <Navigation />
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="mt-24 border-t border-[var(--line)] py-12">
+      <div class="container grid gap-8 md:grid-cols-[1.2fr_.8fr_.8fr]">
+        <div>
+          <p class="font-display text-3xl">The Laureate Equation</p>
+          <p class="mt-3 max-w-xl text-sm leading-6 text-muted">
+            An open, static, source-conscious archive of mathematics and
+            statistics awards. Incomplete records are labelled plainly so the
+            archive can improve without overstating certainty.
+          </p>
+        </div>
+        <div>
+          <p class="font-bold">Explore</p>
+          <ul class="mt-3 space-y-2 text-sm text-muted">
+            <li><a href="/awards">Awards</a></li>
+            <li><a href="/laureates">Laureates</a></li>
+            <li><a href="/timeline">Timeline</a></li>
+            <li><a href="/compare">Compare</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-bold">Trust</p>
+          <ul class="mt-3 space-y-2 text-sm text-muted">
+            <li><a href="/methodology">Methodology</a></li>
+            <li><a href="/sources">Sources</a></li>
+            <li><a href="/contribute">Contribute</a></li>
+            <li><a href="/privacy">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const progress = document.getElementById("reading-progress");
+      const updateProgress = () => {
+        const total =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = total > 0 ? window.scrollY / total : 0;
+        if (progress)
+          progress.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+      };
+      updateProgress();
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      for (const tableWrap of document.querySelectorAll(".table-wrap")) {
+        if (!tableWrap.hasAttribute("tabindex"))
+          tableWrap.setAttribute("tabindex", "0");
+      }
+    </script>
+  </body>
+</html>

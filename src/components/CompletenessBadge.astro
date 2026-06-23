@@ -1,0 +1,22 @@
+---
+import type { CompletenessStatus } from "@data/schema";
+
+interface Props {
+  status: CompletenessStatus;
+}
+
+const labels: Record<CompletenessStatus, string> = {
+  "verified-complete": "Verified complete",
+  "substantially-complete": "Substantially complete",
+  "in-progress": "In progress",
+  "requires-verification": "Requires verification",
+};
+
+const status = Astro.props.status;
+---
+
+<span
+  class="inline-flex items-center rounded-full border border-[var(--line)] px-3 py-1 text-xs font-bold uppercase tracking-wide text-muted"
+>
+  {labels[status]}
+</span>

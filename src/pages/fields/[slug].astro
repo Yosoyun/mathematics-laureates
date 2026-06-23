@@ -1,0 +1,82 @@
+---
+import LaureateCard from "@components/LaureateCard.astro";
+import SourcePanel from "@components/SourcePanel.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awardsForField, fields, laureatesForField } from "@lib/catalog";
+
+export function getStaticPaths() {
+  return fields.map((field) => ({
+    params: { slug: field.slug },
+    props: { field },
+  }));
+}
+
+const { field } = Astro.props;
+const laureates = laureatesForField(field.id);
+const awards = awardsForField(field.id);
+---
+
+<BaseLayout title={field.name} description={field.summary}>
+  <section class="container py-12">
+    <nav class="text-sm text-muted" aria-label="Breadcrumb">
+      <a href="/fields">Fields</a> / {field.name}
+    </nav>
+    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
+      <div>
+        <p class="eyebrow">Research field</p>
+        <h1 class="section-title mt-3">{field.name}</h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
+          {field.summary}
+        </p>
+      </div>
+      <SourcePanel sourceIds={field.sourceIds} title="Field source" />
+    </div>
+  </section>
+  <section class="container grid gap-8 py-8 lg:grid-cols-2">
+    <div class="card p-5">
+      <h2 class="font-display text-3xl">Prerequisites</h2>
+      <ul class="mt-4 space-y-2 text-muted">
+        {field.prerequisites?.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+    <div class="card p-5">
+      <h2 class="font-display text-3xl">Related fields</h2>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {
+          field.relatedFieldIds?.map((fieldId) => {
+            const related = fields.find((item) => item.id === fieldId);
+            return related ? (
+              <a
+                class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-sm font-bold"
+                href={`/fields/${related.slug}`}
+              >
+                {related.name}
+              </a>
+            ) : null;
+          })
+        }
+      </div>
+    </div>
+  </section>
+  <section class="container py-8">
+    <h2 class="font-display text-3xl">Linked laureates</h2>
+    <div class="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {laureates.map((laureate) => <LaureateCard laureate={laureate} />)}
+    </div>
+  </section>
+  <section class="container py-8">
+    <h2 class="font-display text-3xl">Related awards</h2>
+    <div class="mt-5 flex flex-wrap gap-2">
+      {
+        awards.map((award) => (
+          <a
+            class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
+            href={`/awards/${award.slug}`}
+          >
+            {award.name}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,53 @@
+---
+import CompletenessBadge from "@components/CompletenessBadge.astro";
+import { awardMap, fieldMap } from "@lib/catalog";
+import type { Laureate } from "@data/schema";
+
+interface Props {
+  laureate: Laureate;
+}
+
+const { laureate } = Astro.props;
+const awards = awardMap();
+const fields = fieldMap();
+---
+
+<article class="card flex h-full flex-col gap-4 p-5">
+  <div class="flex items-start justify-between gap-3">
+    <div
+      class="grid size-14 place-items-center rounded-lg bg-[var(--surface-muted)] font-display text-2xl"
+      aria-hidden="true"
+    >
+      {laureate.fullName.slice(0, 1)}
+    </div>
+    <CompletenessBadge status={laureate.completenessStatus} />
+  </div>
+  <h2 class="font-display text-3xl leading-none">
+    <a href={`/laureates/${laureate.slug}`}>{laureate.fullName}</a>
+  </h2>
+  <p class="line-clamp-4 text-sm leading-6 text-muted">
+    {laureate.majorContributions[0]}
+  </p>
+  <div class="mt-auto flex flex-wrap gap-2">
+    {
+      laureate.researchFieldIds.slice(0, 3).map((fieldId) => (
+        <a
+          class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-xs font-bold"
+          href={`/fields/${fields.get(fieldId)?.slug}`}
+        >
+          {fields.get(fieldId)?.name}
+        </a>
+      ))
+    }
+  </div>
+  <p class="text-xs text-muted">
+    {
+      laureate.awardRecords
+        .map(
+          (record) =>
+            `${awards.get(record.awardId)?.shortName ?? record.awardId} ${record.year}`,
+        )
+        .join(" · ")
+    }
+  </p>
+</article>

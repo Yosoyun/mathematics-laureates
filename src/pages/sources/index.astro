@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { sources } from "@lib/catalog";
+---
+
+<BaseLayout
+  title="Sources"
+  description="Official and authoritative sources used by the awards archive."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Sources</p>
+    <h1 class="section-title mt-3">Public source register</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      Each structured record references one or more source IDs from this
+      register.
+    </p>
+    <div class="table-wrap mt-8">
+      <table>
+        <caption class="sr-only">Source register</caption>
+        <thead
+          ><tr
+            ><th>Source</th><th>Publisher</th><th>Type</th><th>Accessed</th></tr
+          ></thead
+        >
+        <tbody>
+          {
+            sources.map((source) => (
+              <tr>
+                <>
+                  <td>
+                    <a
+                      class="font-semibold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
+                      href={source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {source.title}
+                    </a>
+                  </td>
+                  <td>{source.publisher}</td>
+                  <td>{source.type}</td>
+                  <td>{source.accessedDate}</td>
+                </>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

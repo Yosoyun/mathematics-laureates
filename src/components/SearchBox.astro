@@ -1,0 +1,95 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const compact = Astro.props.compact ?? false;
+---
+
+<div
+  class={compact ? "relative w-44 sm:w-64" : "relative w-full"}
+  data-search-root
+>
+  <label class="sr-only" for={compact ? "site-search-compact" : "site-search"}
+    >Search awards, people, fields, years, and concepts</label
+  >
+  <input
+    id={compact ? "site-search-compact" : "site-search"}
+    class="w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm"
+    type="search"
+    placeholder="Search archive"
+    autocomplete="off"
+    data-search-input
+  />
+  <div
+    class="absolute right-0 top-[calc(100%+.5rem)] z-50 hidden max-h-96 w-[min(34rem,90vw)] overflow-auto rounded-lg border border-[var(--line)] bg-[var(--surface)] p-2 shadow-editorial"
+    data-search-results
+  >
+  </div>
+</div>
+
+<script>
+  import Fuse from "fuse.js";
+
+  type SearchEntry = {
+    type: string;
+    title: string;
+    url: string;
+    text: string;
+  };
+
+  const roots = document.querySelectorAll("[data-search-root]");
+  const response = await fetch("/search-index.json").catch(() => undefined);
+  const index = (response?.ok ? await response.json() : []) as SearchEntry[];
+  const fuse = new Fuse<SearchEntry>(index, {
+    keys: ["title", "text", "type"],
+    threshold: 0.32,
+    ignoreLocation: true,
+    minMatchCharLength: 2,
+  });
+
+  for (const root of roots) {
+    const input = root.querySelector("[data-search-input]");
+    const panel = root.querySelector("[data-search-results]");
+    if (!(input instanceof HTMLInputElement) || !(panel instanceof HTMLElement))
+      continue;
+
+    input.addEventListener("input", () => {
+      const query = input.value.trim();
+      if (query.length < 2) {
+        panel.classList.add("hidden");
+        panel.innerHTML = "";
+        return;
+      }
+      const results = fuse.search(query).slice(0, 8);
+      panel.innerHTML =
+        results.length === 0
+          ? `<p class="p-3 text-sm text-muted">No matches yet. Try a field, year, award name, or institution.</p>`
+          : results
+              .map(({ item }) => {
+                const safeTitle = escapeHtml(item.title);
+                const safeType = escapeHtml(item.type);
+                const safeUrl = escapeHtml(item.url);
+                return `<a class="block rounded-md px-3 py-2 hover:bg-[var(--surface-muted)] focus:bg-[var(--surface-muted)]" href="${safeUrl}"><span class="text-xs uppercase tracking-wide text-muted">${safeType}</span><span class="block font-semibold">${safeTitle}</span></a>`;
+              })
+              .join("");
+      panel.classList.remove("hidden");
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") panel.classList.add("hidden");
+      if (event.key === "Enter") {
+        const first = panel.querySelector("a");
+        if (first instanceof HTMLAnchorElement) first.click();
+      }
+    });
+  }
+
+  function escapeHtml(value: unknown) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+  }
+</script>

@@ -1,0 +1,148 @@
+---
+import CompletenessBadge from "@components/CompletenessBadge.astro";
+import LaureateCard from "@components/LaureateCard.astro";
+import SourcePanel from "@components/SourcePanel.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awards, laureatesForAward, winnersForAward } from "@lib/catalog";
+
+export function getStaticPaths() {
+  return awards.map((award) => ({
+    params: { slug: award.slug },
+    props: { award },
+  }));
+}
+
+const { award } = Astro.props;
+const winners = winnersForAward(award.id);
+const profiles = laureatesForAward(award.id);
+---
+
+<BaseLayout title={award.name} description={award.description}>
+  <section class="container py-12">
+    <nav class="text-sm text-muted" aria-label="Breadcrumb">
+      <a href="/awards">Awards</a> / {award.name}
+    </nav>
+    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
+      <div>
+        <p class="eyebrow">{award.organisation}</p>
+        <h1 class="section-title mt-3">{award.name}</h1>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <CompletenessBadge status={award.completenessStatus} />
+          <CompletenessBadge status={award.winnerListStatus} />
+        </div>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
+          {award.description}
+        </p>
+      </div>
+      <div class="card p-5">
+        <h2 class="font-display text-2xl">Award facts</h2>
+        <dl class="mt-4 space-y-3 text-sm">
+          <div>
+            <dt class="font-bold">Established</dt><dd class="text-muted">
+              {award.establishedYear}
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Region</dt><dd class="text-muted">
+              {award.countryOrRegion}
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Frequency</dt><dd class="text-muted">
+              {award.frequency}
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Eligibility</dt><dd class="text-muted">
+              {award.eligibility}
+            </dd>
+          </div>
+          {
+            award.ageLimit && (
+              <div>
+                <>
+                  <dt class="font-bold">Age limit</dt>
+                  <dd class="text-muted">{award.ageLimit}</dd>
+                </>
+              </div>
+            )
+          }
+          {
+            award.prizeValue && (
+              <div>
+                <>
+                  <dt class="font-bold">Prize value</dt>
+                  <dd class="text-muted">
+                    {award.prizeValue.amount
+                      ? `${award.prizeValue.amount.toLocaleString()} ${award.prizeValue.currency}`
+                      : award.prizeValue.note}{" "}
+                    {award.prizeValue.referenceYear &&
+                      `(${award.prizeValue.referenceYear})`}
+                  </dd>
+                </>
+              </div>
+            )
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="container grid gap-8 py-8 lg:grid-cols-[1fr_22rem]">
+    <article class="prose-archive">
+      <h2 class="font-display text-3xl">History and significance</h2>
+      <p>{award.history}</p>
+      <h2 class="mt-10 font-display text-3xl">Selection and completeness</h2>
+      <p>{award.selectionProcess}</p>
+      <p>
+        This page currently includes {winners.length} winner dataset record{
+          winners.length === 1 ? "" : "s"
+        }. The winner-list status is <strong>{award.winnerListStatus}</strong>.
+      </p>
+    </article>
+    <SourcePanel
+      sourceIds={award.sourceIds.concat(award.prizeValue?.sourceIds ?? [])}
+    />
+  </section>
+
+  <section class="container py-8">
+    <h2 class="font-display text-3xl">Winner records</h2>
+    <div class="table-wrap mt-5">
+      <table>
+        <caption class="sr-only">Winner records for {award.name}</caption>
+        <thead><tr><th>Year</th><th>Recipient</th><th>Status</th></tr></thead>
+        <tbody>
+          {
+            winners.map((record) => (
+              <tr>
+                <>
+                  <td>{record.year}</td>
+                  <td>{record.recipientNames.join(", ")}</td>
+                  <td>{record.completenessStatus}</td>
+                </>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="container py-8">
+    <h2 class="font-display text-3xl">Linked profiles</h2>
+    {
+      profiles.length > 0 ? (
+        <div class="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {profiles.map((laureate) => (
+            <LaureateCard laureate={laureate} />
+          ))}
+        </div>
+      ) : (
+        <p class="mt-4 text-muted">
+          No detailed linked profiles yet. The winner dataset remains visible
+          above.
+        </p>
+      )
+    }
+  </section>
+</BaseLayout>

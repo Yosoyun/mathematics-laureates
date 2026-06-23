@@ -1,0 +1,51 @@
+---
+import SearchBox from "@components/SearchBox.astro";
+---
+
+<nav
+  class="sticky top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] backdrop-blur-xl"
+>
+  <div class="container flex min-h-16 items-center justify-between gap-4 py-3">
+    <a
+      href="/"
+      class="flex items-center gap-3 font-bold"
+      aria-label="The Laureate Equation home"
+    >
+      <span
+        class="grid size-10 place-items-center rounded-lg bg-obsidian text-sm font-black text-ivory dark:bg-ivory dark:text-obsidian"
+        >LE</span
+      >
+      <span class="hidden sm:inline">The Laureate Equation</span>
+    </a>
+    <div class="hidden items-center gap-4 text-sm font-semibold lg:flex">
+      <a href="/awards">Awards</a>
+      <a href="/laureates">Laureates</a>
+      <a href="/fields">Fields</a>
+      <a href="/timeline">Timeline</a>
+      <a href="/world-map">Map</a>
+      <a href="/compare">Compare</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <SearchBox compact />
+      <button
+        class="no-print grid size-10 place-items-center rounded-lg border border-[var(--line)]"
+        type="button"
+        data-theme-toggle
+        aria-label="Toggle colour theme"
+        title="Toggle theme"
+      >
+        ◐
+      </button>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.querySelector("[data-theme-toggle]");
+  toggle?.addEventListener("click", () => {
+    const next =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem("theme", next);
+  });
+</script>

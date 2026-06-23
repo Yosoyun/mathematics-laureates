@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found">
+  <section class="container py-24">
+    <p class="eyebrow">404</p>
+    <h1 class="section-title mt-3">This page is not in the archive</h1>
+    <p class="mt-5 max-w-xl leading-7 text-muted">
+      Try the search box, awards directory, laureate directory, or sources page.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold">
+      <a
+        class="rounded-lg bg-obsidian px-5 py-3 text-ivory dark:bg-ivory dark:text-obsidian"
+        href="/">Home</a
+      >
+      <a class="rounded-lg border border-[var(--line)] px-5 py-3" href="/awards"
+        >Awards</a
+      >
+    </div>
+  </section>
+</BaseLayout>

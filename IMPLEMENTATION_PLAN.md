@@ -9,6 +9,7 @@
 - Record risks and decisions.
 
 Completion:
+
 - Architecture documented.
 - Package scripts planned.
 - No major requirement omitted.
@@ -22,6 +23,7 @@ Completion:
 - Create global layout, navigation, footer, themes, 404, and error handling.
 
 Validation:
+
 - Format
 - Lint
 - Typecheck

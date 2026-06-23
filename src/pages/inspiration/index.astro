@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Path to Mathematical Greatness"
+  description="Sourced educational pathways and cautions for students inspired by mathematics awards."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Inspiration</p>
+    <h1 class="section-title mt-3">Path to Mathematical Greatness</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      Award stories can inspire study, but no pathway guarantees recognition.
+      This section translates laureate profiles into humane, evidence-conscious
+      learning routes.
+    </p>
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {
+        [
+          [
+            "Build proof fluency",
+            "Read proofs actively, rewrite them in your own words, and learn to construct examples and counterexamples.",
+          ],
+          [
+            "Follow questions, not trophies",
+            "Use awards as historical signposts. The work that matters usually begins with a precise problem, an obstruction, or a new point of view.",
+          ],
+          [
+            "Learn across boundaries",
+            "Many cited contributions connect fields: topology with physics, algebra with number theory, statistics with computation, or analysis with geometry.",
+          ],
+          [
+            "Expect setbacks",
+            "Research careers include failed approaches, incomplete arguments, and long verification cycles. The archive avoids turning prize stories into effortless myths.",
+          ],
+        ].map(([title, text]) => (
+          <article class="card p-6">
+            <>
+              <h2 class="font-display text-3xl">{title}</h2>
+              <p class="mt-3 leading-7 text-muted">{text}</p>
+            </>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

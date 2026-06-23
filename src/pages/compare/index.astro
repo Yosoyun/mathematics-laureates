@@ -1,0 +1,122 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { awards, laureates } from "@lib/catalog";
+
+const awardPayload = awards.map((award) => ({
+  id: award.id,
+  label: award.name,
+  rows: {
+    Organisation: award.organisation,
+    Established: String(award.establishedYear),
+    Frequency: award.frequency,
+    Eligibility: award.eligibility,
+    "Prize value": award.prizeValue?.amount
+      ? `${award.prizeValue.amount.toLocaleString()} ${award.prizeValue.currency}`
+      : "Not stored",
+    "Winner-list status": award.winnerListStatus,
+  },
+}));
+
+const laureatePayload = laureates.map((laureate) => ({
+  id: laureate.id,
+  label: laureate.fullName,
+  rows: {
+    Fields: laureate.researchFieldIds.join(", "),
+    Institution:
+      laureate.institutions?.map((item) => item.name).join(", ") ??
+      "Not stored",
+    Awards: laureate.awardRecords
+      .map((record) => `${record.awardId} ${record.year}`)
+      .join(", "),
+    Contribution: laureate.majorContributions.join("; "),
+    "Profile status": laureate.completenessStatus,
+  },
+}));
+---
+
+<BaseLayout
+  title="Compare"
+  description="Compare awards and laureates without subjective rankings."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Comparison tool</p>
+    <h1 class="section-title mt-3">Compare records, not human worth</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      This tool compares factual metadata such as eligibility, frequency,
+      fields, institutions, and completeness status. It does not rank
+      mathematicians.
+    </p>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <label
+        ><span class="text-sm font-bold">Mode</span><select
+          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          data-compare-mode
+          ><option value="awards">Awards</option><option value="laureates"
+            >Laureates</option
+          ></select
+        ></label
+      >
+      <label
+        ><span class="text-sm font-bold">First record</span><select
+          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          data-compare-a></select></label
+      >
+      <label
+        ><span class="text-sm font-bold">Second record</span><select
+          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          data-compare-b></select></label
+      >
+    </div>
+    <div class="table-wrap mt-8" data-compare-output></div>
+  </section>
+  <script is:inline define:vars={{ awardPayload, laureatePayload }}>
+    const mode = document.querySelector("[data-compare-mode]");
+    const first = document.querySelector("[data-compare-a]");
+    const second = document.querySelector("[data-compare-b]");
+    const output = document.querySelector("[data-compare-output]");
+    const payloads = { awards: awardPayload, laureates: laureatePayload };
+
+    function populate() {
+      const data = payloads[mode.value];
+      first.innerHTML = data
+        .map((item) => `<option value="${item.id}">${item.label}</option>`)
+        .join("");
+      second.innerHTML = data
+        .map((item) => `<option value="${item.id}">${item.label}</option>`)
+        .join("");
+      second.selectedIndex = Math.min(1, data.length - 1);
+      render();
+    }
+
+    function render() {
+      const data = payloads[mode.value];
+      const a = data.find((item) => item.id === first.value) ?? data[0];
+      const b =
+        data.find((item) => item.id === second.value) ?? data[1] ?? data[0];
+      const keys = [
+        ...new Set([...Object.keys(a.rows), ...Object.keys(b.rows)]),
+      ];
+      output.innerHTML = `<table><caption class="sr-only">Comparison table</caption><thead><tr><th>Attribute</th><th>${a.label}</th><th>${b.label}</th></tr></thead><tbody>${keys
+        .map(
+          (key) =>
+            `<tr><td>${key}</td><td>${a.rows[key] ?? ""}</td><td>${b.rows[key] ?? ""}</td></tr>`,
+        )
+        .join("")}</tbody></table>`;
+      const params = new URLSearchParams({
+        mode: mode.value,
+        a: a.id,
+        b: b.id,
+      });
+      history.replaceState(
+        null,
+        "",
+        `${location.pathname}?${params.toString()}`,
+      );
+    }
+
+    mode.addEventListener("change", populate);
+    first.addEventListener("change", render);
+    second.addEventListener("change", render);
+    populate();
+  </script>
+</BaseLayout>

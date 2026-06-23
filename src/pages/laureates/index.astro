@@ -1,0 +1,103 @@
+---
+import LaureateCard from "@components/LaureateCard.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { fields, laureates } from "@lib/catalog";
+
+const fieldOptions = fields.map((field) => ({
+  id: field.id,
+  name: field.name,
+}));
+---
+
+<BaseLayout
+  title="Laureates"
+  description="Browse sourced flagship profiles of mathematics and statistics laureates."
+>
+  <section class="container py-14">
+    <p class="eyebrow">Laureate directory</p>
+    <h1 class="section-title mt-3">People and research ideas</h1>
+    <p class="mt-5 max-w-3xl leading-7 text-muted">
+      Profiles separate award-cited mathematical impact from biographical
+      details that still need deeper source verification.
+    </p>
+    <div class="mt-8 grid gap-4 md:grid-cols-[1fr_18rem]">
+      <label class="block">
+        <span class="text-sm font-bold"
+          >Filter by name, field, or contribution</span
+        >
+        <input
+          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          type="search"
+          data-laureate-query
+          placeholder="Try 'PDE', 'geometry', or 'Wiles'"
+        />
+      </label>
+      <label class="block">
+        <span class="text-sm font-bold">Research field</span>
+        <select
+          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          data-laureate-field
+        >
+          <option value="all">All fields</option>
+          {
+            fieldOptions.map((field) => (
+              <option value={field.id}>{field.name}</option>
+            ))
+          }
+        </select>
+      </label>
+    </div>
+    <div
+      class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+      data-laureate-grid
+    >
+      {
+        laureates.map((laureate) => (
+          <div
+            data-laureate-card
+            data-fields={laureate.researchFieldIds.join(" ")}
+            data-search={`${laureate.fullName} ${laureate.majorContributions.join(" ")} ${laureate.researchFieldIds.join(" ")}`.toLowerCase()}
+          >
+            <LaureateCard laureate={laureate} />
+          </div>
+        ))
+      }
+    </div>
+    <p
+      class="mt-8 hidden rounded-lg border border-[var(--line)] p-5 text-muted"
+      data-laureate-empty
+    >
+      No profiles match these filters.
+    </p>
+  </section>
+  <script>
+    const query = document.querySelector("[data-laureate-query]");
+    const field = document.querySelector("[data-laureate-field]");
+    const cards = [...document.querySelectorAll("[data-laureate-card]")];
+    const empty = document.querySelector("[data-laureate-empty]");
+
+    const applyFilters = () => {
+      const q =
+        query instanceof HTMLInputElement
+          ? query.value.trim().toLowerCase()
+          : "";
+      const f = field instanceof HTMLSelectElement ? field.value : "all";
+      let visible = 0;
+      for (const card of cards) {
+        const matchesQuery =
+          q.length === 0 ||
+          (card.getAttribute("data-search") ?? "").includes(q);
+        const matchesField =
+          f === "all" ||
+          (card.getAttribute("data-fields") ?? "").split(" ").includes(f);
+        const show = matchesQuery && matchesField;
+        card.classList.toggle("hidden", !show);
+        if (show) visible += 1;
+      }
+      empty?.classList.toggle("hidden", visible > 0);
+    };
+
+    query?.addEventListener("input", applyFilters);
+    field?.addEventListener("change", applyFilters);
+  </script>
+</BaseLayout>

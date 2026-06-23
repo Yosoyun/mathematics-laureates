@@ -2,102 +2,102 @@
 
 ## Product
 
-- [ ] Every required route exists.
-- [ ] Every required award exists.
-- [ ] Award pages are data-driven.
-- [ ] Laureate pages are data-driven.
-- [ ] Search works.
-- [ ] Filters work.
-- [ ] Timeline works.
-- [ ] Field explorer works.
-- [ ] World map works with fallback.
-- [ ] Comparison works.
-- [ ] Inspiration section exists.
-- [ ] Methodology is visible.
-- [ ] Corrections workflow exists.
-- [ ] Data completeness is transparent.
+- [x] Every required route exists.
+- [x] Every required award exists.
+- [x] Award pages are data-driven.
+- [x] Laureate pages are data-driven.
+- [x] Search works.
+- [x] Filters work.
+- [x] Timeline works.
+- [x] Field explorer works.
+- [x] World map works with fallback.
+- [x] Comparison works.
+- [x] Inspiration section exists.
+- [x] Methodology is visible.
+- [x] Corrections workflow exists.
+- [x] Data completeness is transparent.
 
 ## Content
 
-- [ ] Award names are correct.
-- [ ] Organisations are correct.
-- [ ] Establishment years are verified.
-- [ ] Winner lists have source references.
-- [ ] Joint awards are represented accurately.
-- [ ] Profiles are sourced.
-- [ ] Mathematical explanations are coherent.
-- [ ] Quotations are attributed.
-- [ ] Prize amounts have reference years.
-- [ ] No fabricated content exists.
+- [x] Award names are correct.
+- [x] Organisations are correct.
+- [x] Establishment years are verified.
+- [x] Winner lists have source references.
+- [x] Joint awards are represented accurately.
+- [x] Profiles are sourced.
+- [x] Mathematical explanations are coherent.
+- [x] Quotations are attributed.
+- [x] Prize amounts have reference years.
+- [x] No fabricated content exists.
 
 ## UX
 
-- [ ] Mobile navigation works.
-- [ ] Keyboard navigation works.
-- [ ] Focus states are visible.
-- [ ] Search is keyboard accessible.
-- [ ] Filters are usable on mobile.
-- [ ] Long pages have table of contents.
-- [ ] Print styles work.
-- [ ] Empty and error states are clear.
-- [ ] Dark and light themes work.
-- [ ] Reduced-motion support works.
+- [x] Mobile navigation works.
+- [x] Keyboard navigation works.
+- [x] Focus states are visible.
+- [x] Search is keyboard accessible.
+- [x] Filters are usable on mobile.
+- [x] Long pages have table of contents.
+- [x] Print styles work.
+- [x] Empty and error states are clear.
+- [x] Dark and light themes work.
+- [x] Reduced-motion support works.
 
 ## Accessibility
 
-- [ ] Semantic landmarks exist.
-- [ ] Heading order is valid.
-- [ ] Contrast is sufficient.
-- [ ] Images have useful alt text.
-- [ ] Visualisations have text alternatives.
-- [ ] Tables have captions and headers.
-- [ ] Interactive controls have accessible names.
-- [ ] Touch targets are adequate.
-- [ ] Axe checks pass.
+- [x] Semantic landmarks exist.
+- [x] Heading order is valid.
+- [x] Contrast is sufficient.
+- [x] Images have useful alt text.
+- [x] Visualisations have text alternatives.
+- [x] Tables have captions and headers.
+- [x] Interactive controls have accessible names.
+- [x] Touch targets are adequate.
+- [x] Axe checks pass.
 
 ## Engineering
 
-- [ ] TypeScript strict mode is enabled.
-- [ ] Data schemas are validated.
-- [ ] Invalid data fails CI.
-- [ ] Unit tests pass.
-- [ ] E2E tests pass.
-- [ ] Link checks pass.
-- [ ] Production build passes.
-- [ ] No unused dependencies.
-- [ ] No secrets are committed.
-- [ ] No critical console errors.
-- [ ] Static output works under repository subpath.
+- [x] TypeScript strict mode is enabled.
+- [x] Data schemas are validated.
+- [x] Invalid data fails CI.
+- [x] Unit tests pass.
+- [x] E2E tests pass.
+- [x] Link checks pass.
+- [x] Production build passes.
+- [x] No unused dependencies.
+- [x] No secrets are committed.
+- [x] No critical console errors.
+- [x] Static output works under repository subpath.
 
 ## Performance and SEO
 
-- [ ] Performance target reached or exceptions documented.
-- [ ] Accessibility target reached.
-- [ ] Best Practices target reached.
-- [ ] SEO target reached.
-- [ ] Sitemap exists.
-- [ ] robots.txt exists.
-- [ ] Canonical URLs exist.
-- [ ] Open Graph metadata exists.
-- [ ] Structured data exists.
-- [ ] Images are optimised.
-- [ ] Heavy features are lazy loaded.
+- [x] Performance target reached or exceptions documented.
+- [x] Accessibility target reached.
+- [x] Best Practices target reached.
+- [x] SEO target reached.
+- [x] Sitemap exists.
+- [x] robots.txt exists.
+- [x] Canonical URLs exist.
+- [x] Open Graph metadata exists.
+- [x] Structured data exists.
+- [x] Images are optimised.
+- [x] Heavy features are lazy loaded.
 
 ## Deployment
 
-- [ ] GitHub Actions CI exists.
-- [ ] GitHub Pages workflow exists.
-- [ ] Clean CI build passes.
-- [ ] Public URL is verified when authorised.
-- [ ] Nested paths and assets work.
-- [ ] Deployment result is documented.
+- [x] GitHub Actions CI exists.
+- [x] GitHub Pages workflow exists.
+- [x] Clean CI build passes.
+- [ ] Public URL is verified when authorised. Blocked until a separate GitHub repository is authorised.
+- [x] Nested paths and assets work.
+- [x] Deployment result is documented.
 
 ## Documentation
 
-- [ ] README is complete.
-- [ ] Local setup is documented.
-- [ ] Data contribution is documented.
-- [ ] Citation policy is documented.
-- [ ] Correction process is documented.
-- [ ] Known limitations are documented.
-- [ ] Final status report is complete.
+- [x] README is complete.
+- [x] Local setup is documented.
+- [x] Data contribution is documented.
+- [x] Citation policy is documented.
+- [x] Correction process is documented.
+- [x] Known limitations are documented.
+- [x] Final status report is complete.

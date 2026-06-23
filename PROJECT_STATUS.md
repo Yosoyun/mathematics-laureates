@@ -6,11 +6,11 @@ Milestone 17 — Final Audit
 
 ## State
 
-Local first release built and validated. Public deployment verification remains blocked until a separate GitHub repository is selected and authorised.
+Local first release built and clean-room validated with pnpm. Public deployment verification remains blocked until a separate GitHub repository is selected and authorised.
 
 ## Last Completed Action
 
-Built a fresh standalone Astro platform in `/Users/vanindra/mathematics laureates/math-awards-platform` without modifying the existing `/Users/vanindra/Downloads/codex` GitHub project.
+Resolved pnpm installation with native dependency permissions in `pnpm-workspace.yaml`, ran a clean dependency reinstall, completed the full validation suite, and visually inspected the required responsive breakpoints.
 
 ## Next Action
 
@@ -41,12 +41,12 @@ Create or authorise a separate GitHub repository for this project, push the vali
 
 | Check                   | Status  | Last Run   | Notes                                                                |
 | ----------------------- | ------- | ---------- | -------------------------------------------------------------------- |
-| Format                  | Pass    | 2026-06-24 | `pnpm format:check`                                                  |
-| Lint                    | Pass    | 2026-06-24 | `pnpm lint`                                                          |
-| Typecheck               | Pass    | 2026-06-24 | `pnpm typecheck`                                                     |
-| Unit tests              | Pass    | 2026-06-24 | `pnpm test`                                                          |
-| E2E tests               | Pass    | 2026-06-24 | `pnpm test:e2e`, 36 Playwright checks                                |
-| Accessibility tests     | Pass    | 2026-06-24 | `pnpm audit:a11y`, axe scans on desktop and mobile                   |
+| Format                  | Pass    | 2026-06-24 | Clean-room run: `pnpm format:check`                                  |
+| Lint                    | Pass    | 2026-06-24 | Clean-room run: `pnpm lint`                                          |
+| Typecheck               | Pass    | 2026-06-24 | Clean-room run: `pnpm typecheck`                                     |
+| Unit tests              | Pass    | 2026-06-24 | Clean-room run: `pnpm test`, 3 Vitest checks                         |
+| E2E tests               | Pass    | 2026-06-24 | Clean-room run: `pnpm test:e2e`, 36 Playwright checks                |
+| Accessibility tests     | Pass    | 2026-06-24 | Clean-room run: `pnpm audit:a11y`, 14 axe checks                     |
 | Data validation         | Pass    | 2026-06-24 | 23 awards, 27 winner records, 46 laureate profiles, and 25 sources   |
 | Link validation         | Pass    | 2026-06-24 | 25 external source URLs and 98 internal routes checked syntactically |
 | Production build        | Pass    | 2026-06-24 | Astro static build generated 99 pages                                |
@@ -61,6 +61,7 @@ Record date, decision, alternatives, and rationale.
 - 2026-06-24 — Store canonical content in typed TypeScript data modules with Zod schemas and custom relationship validation. This keeps content separate from presentation while allowing build-time checks for references, duplicate IDs, years, and completeness labels.
 - 2026-06-24 — Omit portraits until licence metadata is verified. Profile pages display an accessible missing-image state instead of using unverified images.
 - 2026-06-24 — Use explicit `in-progress` and `requires-verification` labels for partial award datasets and profile details. No partial winner list is labelled complete.
+- 2026-06-24 — Standardised on pnpm. Native package install permissions for `esbuild` and `sharp` are recorded in `pnpm-workspace.yaml`, and `pnpm install --frozen-lockfile` passes from a clean `node_modules` removal.
 
 ## Data Coverage
 
@@ -72,6 +73,7 @@ Record each award, winner-list status, number of verified laureates, and last ve
 - Research fields: 15 priority fields.
 - Source register: 25 official or authoritative source entries.
 - Last verification date used in structured records: 2026-06-24.
+- Visual audit: inspected `/`, `/awards`, `/awards/fields-medal`, `/laureates`, `/laureates/maryam-mirzakhani`, `/fields`, `/timeline`, `/world-map`, and `/compare` at 360x800, 768x1024, 1280x800, and 1440x900. No horizontal overflow was detected.
 
 ## Known Issues
 

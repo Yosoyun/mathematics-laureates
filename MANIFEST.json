@@ -1,0 +1,28 @@
+{
+  "package_name": "math-awards-codex-autonomous",
+  "purpose": "Autonomous Codex control package for a global mathematics awards and laureates website",
+  "files": [
+    ".github/workflows/README.md",
+    "AGENTS.md",
+    "AUTONOMY_RULES.md",
+    "CONTENT_COVERAGE.md",
+    "CONTRIBUTING_TEMPLATE.md",
+    "DATA_MODEL.md",
+    "DEPLOYMENT.md",
+    "DESIGN_SYSTEM.md",
+    "FINAL_AUDIT_PROMPT.md",
+    "IMPLEMENTATION_PLAN.md",
+    "PROJECT_STATUS.md",
+    "QUALITY_CHECKLIST.md",
+    "README_FIRST.md",
+    "README_PROJECT_TEMPLATE.md",
+    "REPOSITORY_STRUCTURE.md",
+    "RESEARCH_POLICY.md",
+    "RESUME_CODEX.md",
+    "SECURITY_AND_LEGAL.md",
+    "SPECIFICATION.md",
+    "START_CODEX.md",
+    "VALIDATION_LOOP.md"
+  ],
+  "entry_prompt": "START_CODEX.md"
+}

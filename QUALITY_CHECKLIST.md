@@ -25,10 +25,12 @@
 - [x] Winner lists have source references.
 - [x] Joint awards are represented accurately.
 - [x] Profiles are sourced.
+- [x] Flagship profiles have substantive biographies, education, contributions, multi-level explanations, and publications/references.
 - [x] Mathematical explanations are coherent.
-- [x] Quotations are attributed.
+- [x] No unattributed quotations are present; portraits and long quotations are omitted until licensing and attribution can be verified.
 - [x] Prize amounts have reference years.
 - [x] No fabricated content exists.
+- [ ] AMS historical Bôcher, Cole, and Steele winner lists are fully imported from official AMS historical pages. Blocked by AMS prize-browser access in this environment.
 
 ## UX
 

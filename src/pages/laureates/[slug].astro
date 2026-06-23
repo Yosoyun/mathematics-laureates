@@ -106,6 +106,19 @@ const allSourceIds = [
       <h2 class="mt-10 font-display text-3xl">Major contribution</h2>
       <p>{laureate.majorContributions.join("; ")}.</p>
 
+      {
+        laureate.education && laureate.education.length > 0 && (
+          <>
+            <h2 class="mt-10 font-display text-3xl">Education</h2>
+            <ul>
+              {laureate.education.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
       <h2 class="mt-10 font-display text-3xl">Multi-level explanation</h2>
       <div class="mt-4 grid gap-4">
         <section class="card p-5">
@@ -129,6 +142,21 @@ const allSourceIds = [
       <ul>
         {laureate.explanation.prerequisites.map((item) => <li>{item}</li>)}
       </ul>
+
+      {
+        laureate.publications && laureate.publications.length > 0 && (
+          <>
+            <h2 class="mt-10 font-display text-3xl">
+              Publications and references
+            </h2>
+            <ul>
+              {laureate.publications.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
     </article>
     <SourcePanel sourceIds={allSourceIds} />
   </section>

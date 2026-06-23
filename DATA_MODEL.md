@@ -67,6 +67,16 @@ interface Award {
   officialUrl: string;
   sourceIds: string[];
   completenessStatus: CompletenessStatus;
+  winnerListStatus: CompletenessStatus;
+  winnerCoverage: {
+    earliestYear?: number;
+    latestYear?: number;
+    missingYears: number[];
+    nonAwardedYears: number[];
+    coverageNote: string;
+    sourceIds: string[];
+    lastVerified: string;
+  };
   lastVerified: string;
 }
 ```

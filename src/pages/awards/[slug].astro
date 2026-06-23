@@ -99,9 +99,48 @@ const profiles = laureatesForAward(award.id);
           winners.length === 1 ? "" : "s"
         }. The winner-list status is <strong>{award.winnerListStatus}</strong>.
       </p>
+      <h3 class="mt-8 font-display text-2xl">Winner coverage audit</h3>
+      <dl class="mt-4 grid gap-4 sm:grid-cols-2">
+        <div>
+          <dt class="font-bold">Covered years</dt>
+          <dd>
+            {award.winnerCoverage.earliestYear} - {
+              award.winnerCoverage.latestYear
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class="font-bold">Last verified</dt>
+          <dd>{award.winnerCoverage.lastVerified}</dd>
+        </div>
+        <div>
+          <dt class="font-bold">Missing years</dt>
+          <dd>
+            {
+              award.winnerCoverage.missingYears.length > 0
+                ? award.winnerCoverage.missingYears.join(", ")
+                : "None recorded in the audited source span"
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class="font-bold">No-award years</dt>
+          <dd>
+            {
+              award.winnerCoverage.nonAwardedYears.length > 0
+                ? award.winnerCoverage.nonAwardedYears.join(", ")
+                : "None recorded"
+            }
+          </dd>
+        </div>
+      </dl>
+      <p class="mt-4">{award.winnerCoverage.coverageNote}</p>
     </article>
     <SourcePanel
-      sourceIds={award.sourceIds.concat(award.prizeValue?.sourceIds ?? [])}
+      sourceIds={award.sourceIds.concat(
+        award.prizeValue?.sourceIds ?? [],
+        award.winnerCoverage.sourceIds,
+      )}
     />
   </section>
 
@@ -110,7 +149,11 @@ const profiles = laureatesForAward(award.id);
     <div class="table-wrap mt-5">
       <table>
         <caption class="sr-only">Winner records for {award.name}</caption>
-        <thead><tr><th>Year</th><th>Recipient</th><th>Status</th></tr></thead>
+        <thead
+          ><tr
+            ><th>Year</th><th>Recipient</th><th>Status</th><th>Citation</th></tr
+          ></thead
+        >
         <tbody>
           {
             winners.map((record) => (
@@ -119,6 +162,13 @@ const profiles = laureatesForAward(award.id);
                   <td>{record.year}</td>
                   <td>{record.recipientNames.join(", ")}</td>
                   <td>{record.completenessStatus}</td>
+                  <td>
+                    {record.officialCitationUrl ? (
+                      <a href={record.officialCitationUrl}>Official source</a>
+                    ) : (
+                      "Source panel"
+                    )}
+                  </td>
                 </>
               </tr>
             ))

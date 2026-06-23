@@ -20,6 +20,24 @@ describe("catalog", () => {
         winnerRecords.some((record) => record.awardId === award.id),
         award.name,
       ).toBe(true);
+      expect(
+        award.winnerCoverage.coverageNote.length,
+        award.name,
+      ).toBeGreaterThan(40);
+    }
+  });
+
+  it("keeps the official source span visible for winner lists", () => {
+    for (const award of awards) {
+      const years = winnerRecords
+        .filter((record) => record.awardId === award.id)
+        .map((record) => record.year);
+      expect(award.winnerCoverage.earliestYear, award.name).toBe(
+        Math.min(...years),
+      );
+      expect(award.winnerCoverage.latestYear, award.name).toBe(
+        Math.max(...years),
+      );
     }
   });
 

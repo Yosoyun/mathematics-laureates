@@ -121,6 +121,12 @@ export function validateRelationships(): string[] {
       sourceIds,
       errors,
     );
+    checkSourceIds(
+      `award ${award.id} winner coverage`,
+      award.winnerCoverage.sourceIds,
+      sourceIds,
+      errors,
+    );
   }
 
   for (const field of parsed.fields) {

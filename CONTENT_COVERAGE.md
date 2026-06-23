@@ -38,9 +38,9 @@
 
 - All 23 awards represented.
 - Each award has verified metadata and sources.
-- Winner lists imported where official lists are accessible.
+- Winner lists imported where official lists are accessible, with 326 audited winner records currently represented.
 - Every winner list has a completeness status.
-- At least 40 detailed laureate profiles.
+- At least 40 detailed laureate profiles; the current archive includes 46 detailed flagship profiles.
 - At least one strong profile from each major field.
 - Broad representation across eras, institutions, regions, and award types.
 
@@ -83,5 +83,12 @@ Each award page must state:
 - Number of records included
 - Earliest and latest year covered
 - Missing known years
+- Explicit no-award years where known
 - Last verification date
 - Completeness status
+
+## Current Audit Caveats
+
+- Complete historical coverage is claimed only when every available source record in the audited span was checked against an official static list or official prize page.
+- AMS Bôcher, Cole, and Steele historical records remain `requires-verification` because the AMS prize-browser pages were inaccessible from the validation environment.
+- Clay, Wolf, Shaw, Sylvester, and Balzan records preserve source notes and non-complete labels where the primary source is dynamic, category-dependent, or cross-checked against MacTutor rather than a single official static table.

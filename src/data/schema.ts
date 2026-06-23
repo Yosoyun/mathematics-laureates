@@ -58,6 +58,16 @@ export const prizeValueSchema = z.object({
   sourceIds: z.array(z.string()).min(1),
 });
 
+export const winnerCoverageSchema = z.object({
+  earliestYear: z.number().int().min(1800).max(2100).optional(),
+  latestYear: z.number().int().min(1800).max(2100).optional(),
+  missingYears: z.array(z.number().int().min(1800).max(2100)).default([]),
+  nonAwardedYears: z.array(z.number().int().min(1800).max(2100)).default([]),
+  coverageNote: z.string().min(40),
+  sourceIds: z.array(z.string()).min(1),
+  lastVerified: z.iso.date(),
+});
+
 export const awardSchema = z.object({
   id: z.string().min(2),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
@@ -78,6 +88,7 @@ export const awardSchema = z.object({
   sourceIds: z.array(z.string()).min(1),
   completenessStatus: completenessStatusSchema,
   winnerListStatus: completenessStatusSchema,
+  winnerCoverage: winnerCoverageSchema,
   lastVerified: z.iso.date(),
 });
 
@@ -154,6 +165,7 @@ export const catalogSchema = z.object({
 
 export type CompletenessStatus = z.infer<typeof completenessStatusSchema>;
 export type Source = z.infer<typeof sourceSchema>;
+export type WinnerCoverage = z.infer<typeof winnerCoverageSchema>;
 export type Award = z.infer<typeof awardSchema>;
 export type ResearchField = z.infer<typeof researchFieldSchema>;
 export type WinnerRecord = z.infer<typeof winnerRecordSchema>;

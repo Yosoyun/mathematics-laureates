@@ -4,6 +4,7 @@ import LaureateCard from "@components/LaureateCard.astro";
 import SearchBox from "@components/SearchBox.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { awards, fields, laureates, winnerRecords } from "@lib/catalog";
+import { withBase } from "@lib/paths";
 
 const featuredAwards = awards.slice(0, 6);
 const featuredLaureates = laureates.slice(0, 6);
@@ -31,11 +32,11 @@ const recentWinners = [...winnerRecords]
       <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold">
         <a
           class="rounded-lg bg-obsidian px-5 py-3 text-ivory dark:bg-ivory dark:text-obsidian"
-          href="/awards">Browse awards</a
+          href={withBase("/awards")}>Browse awards</a
         >
         <a
           class="rounded-lg border border-[var(--line)] px-5 py-3"
-          href="/methodology">Read methodology</a
+          href={withBase("/methodology")}>Read methodology</a
         >
       </div>
     </div>
@@ -71,7 +72,7 @@ const recentWinners = [...winnerRecords]
       </div>
       <a
         class="text-sm font-bold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
-        href="/awards">All awards</a
+        href={withBase("/awards")}>All awards</a
       >
     </div>
     <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -87,7 +88,7 @@ const recentWinners = [...winnerRecords]
       </div>
       <a
         class="text-sm font-bold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
-        href="/laureates">All profiles</a
+        href={withBase("/laureates")}>All profiles</a
       >
     </div>
     <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -109,7 +110,7 @@ const recentWinners = [...winnerRecords]
       </p>
       <a
         class="mt-6 inline-flex rounded-lg border border-[var(--line)] px-5 py-3 text-sm font-bold"
-        href="/timeline">Open timeline</a
+        href={withBase("/timeline")}>Open timeline</a
       >
     </div>
     <ol class="card divide-y divide-[var(--line)]">
@@ -127,19 +128,19 @@ const recentWinners = [...winnerRecords]
   </section>
 
   <section class="container grid gap-5 py-12 md:grid-cols-3">
-    <a class="card p-6" href="/fields">
+    <a class="card p-6" href={withBase("/fields")}>
       <p class="eyebrow">Research-field explorer</p>
       <h2 class="mt-4 font-display text-3xl">
         From algebra to information science
       </h2>
     </a>
-    <a class="card p-6" href="/world-map">
+    <a class="card p-6" href={withBase("/world-map")}>
       <p class="eyebrow">Global map</p>
       <h2 class="mt-4 font-display text-3xl">
         Separate birthplace, affiliation, institution, and award country
       </h2>
     </a>
-    <a class="card p-6" href="/inspiration">
+    <a class="card p-6" href={withBase("/inspiration")}>
       <p class="eyebrow">Pathways</p>
       <h2 class="mt-4 font-display text-3xl">Path to Mathematical Greatness</h2>
     </a>

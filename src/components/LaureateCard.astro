@@ -1,6 +1,7 @@
 ---
 import CompletenessBadge from "@components/CompletenessBadge.astro";
 import { awardMap, fieldMap } from "@lib/catalog";
+import { withBase } from "@lib/paths";
 import type { Laureate } from "@data/schema";
 
 interface Props {
@@ -23,7 +24,7 @@ const fields = fieldMap();
     <CompletenessBadge status={laureate.completenessStatus} />
   </div>
   <h2 class="font-display text-3xl leading-none">
-    <a href={`/laureates/${laureate.slug}`}>{laureate.fullName}</a>
+    <a href={withBase(`/laureates/${laureate.slug}`)}>{laureate.fullName}</a>
   </h2>
   <p class="line-clamp-4 text-sm leading-6 text-muted">
     {laureate.majorContributions[0]}
@@ -33,7 +34,7 @@ const fields = fieldMap();
       laureate.researchFieldIds.slice(0, 3).map((fieldId) => (
         <a
           class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-xs font-bold"
-          href={`/fields/${fields.get(fieldId)?.slug}`}
+          href={withBase(`/fields/${fields.get(fieldId)?.slug}`)}
         >
           {fields.get(fieldId)?.name}
         </a>

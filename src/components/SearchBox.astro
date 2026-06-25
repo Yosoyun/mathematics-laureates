@@ -39,7 +39,10 @@ const compact = Astro.props.compact ?? false;
   };
 
   const roots = document.querySelectorAll("[data-search-root]");
-  const response = await fetch("/search-index.json").catch(() => undefined);
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const response = await fetch(`${baseUrl}/search-index.json`).catch(
+    () => undefined,
+  );
   const index = (response?.ok ? await response.json() : []) as SearchEntry[];
   const fuse = new Fuse<SearchEntry>(index, {
     keys: ["title", "text", "type"],
@@ -69,7 +72,7 @@ const compact = Astro.props.compact ?? false;
               .map(({ item }) => {
                 const safeTitle = escapeHtml(item.title);
                 const safeType = escapeHtml(item.type);
-                const safeUrl = escapeHtml(item.url);
+                const safeUrl = escapeHtml(`${baseUrl}${item.url}`);
                 return `<a class="block rounded-md px-3 py-2 hover:bg-[var(--surface-muted)] focus:bg-[var(--surface-muted)]" href="${safeUrl}"><span class="text-xs uppercase tracking-wide text-muted">${safeType}</span><span class="block font-semibold">${safeTitle}</span></a>`;
               })
               .join("");

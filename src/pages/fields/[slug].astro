@@ -3,6 +3,7 @@ import LaureateCard from "@components/LaureateCard.astro";
 import SourcePanel from "@components/SourcePanel.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { awardsForField, fields, laureatesForField } from "@lib/catalog";
+import { withBase } from "@lib/paths";
 
 export function getStaticPaths() {
   return fields.map((field) => ({
@@ -19,7 +20,7 @@ const awards = awardsForField(field.id);
 <BaseLayout title={field.name} description={field.summary}>
   <section class="container py-12">
     <nav class="text-sm text-muted" aria-label="Breadcrumb">
-      <a href="/fields">Fields</a> / {field.name}
+      <a href={withBase("/fields")}>Fields</a> / {field.name}
     </nav>
     <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
       <div>
@@ -48,7 +49,7 @@ const awards = awardsForField(field.id);
             return related ? (
               <a
                 class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-sm font-bold"
-                href={`/fields/${related.slug}`}
+                href={withBase(`/fields/${related.slug}`)}
               >
                 {related.name}
               </a>
@@ -71,7 +72,7 @@ const awards = awardsForField(field.id);
         awards.map((award) => (
           <a
             class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
-            href={`/awards/${award.slug}`}
+            href={withBase(`/awards/${award.slug}`)}
           >
             {award.name}
           </a>

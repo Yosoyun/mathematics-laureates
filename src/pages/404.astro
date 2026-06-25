@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { withBase } from "@lib/paths";
 ---
 
 <BaseLayout title="Page not found">
@@ -12,10 +13,11 @@ import BaseLayout from "@layouts/BaseLayout.astro";
     <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold">
       <a
         class="rounded-lg bg-obsidian px-5 py-3 text-ivory dark:bg-ivory dark:text-obsidian"
-        href="/">Home</a
+        href={withBase("/")}>Home</a
       >
-      <a class="rounded-lg border border-[var(--line)] px-5 py-3" href="/awards"
-        >Awards</a
+      <a
+        class="rounded-lg border border-[var(--line)] px-5 py-3"
+        href={withBase("/awards")}>Awards</a
       >
     </div>
   </section>

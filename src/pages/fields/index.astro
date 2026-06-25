@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { fields, laureatesForField } from "@lib/catalog";
+import { withBase } from "@lib/paths";
 ---
 
 <BaseLayout
@@ -22,7 +23,7 @@ import { fields, laureatesForField } from "@lib/catalog";
               {laureatesForField(field.id).length} linked profiles
             </p>
             <h2 class="mt-3 font-display text-3xl">
-              <a href={`/fields/${field.slug}`}>{field.name}</a>
+              <a href={withBase(`/fields/${field.slug}`)}>{field.name}</a>
             </h2>
             <p class="mt-3 text-sm leading-6 text-muted">{field.summary}</p>
           </article>

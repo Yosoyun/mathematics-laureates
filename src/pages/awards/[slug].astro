@@ -4,6 +4,7 @@ import LaureateCard from "@components/LaureateCard.astro";
 import SourcePanel from "@components/SourcePanel.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { awards, laureatesForAward, winnersForAward } from "@lib/catalog";
+import { withBase } from "@lib/paths";
 
 export function getStaticPaths() {
   return awards.map((award) => ({
@@ -20,7 +21,7 @@ const profiles = laureatesForAward(award.id);
 <BaseLayout title={award.name} description={award.description}>
   <section class="container py-12">
     <nav class="text-sm text-muted" aria-label="Breadcrumb">
-      <a href="/awards">Awards</a> / {award.name}
+      <a href={withBase("/awards")}>Awards</a> / {award.name}
     </nav>
     <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
       <div>

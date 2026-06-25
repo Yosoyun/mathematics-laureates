@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { awardMap, awards, winnerRecords } from "@lib/catalog";
+import { withBase } from "@lib/paths";
 
 const awardById = awardMap();
 const events = [
@@ -8,14 +9,14 @@ const events = [
     year: award.establishedYear,
     type: "Award established",
     title: award.name,
-    href: `/awards/${award.slug}`,
+    href: withBase(`/awards/${award.slug}`),
     detail: award.organisation,
   })),
   ...winnerRecords.map((record) => ({
     year: record.year,
     type: "Winner record",
     title: record.recipientNames.join(", "),
-    href: `/awards/${awardById.get(record.awardId)?.slug}`,
+    href: withBase(`/awards/${awardById.get(record.awardId)?.slug}`),
     detail: awardById.get(record.awardId)?.name ?? record.awardId,
   })),
 ].sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));

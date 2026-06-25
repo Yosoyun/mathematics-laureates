@@ -1,5 +1,6 @@
 ---
 import Navigation from "@components/Navigation.astro";
+import { withBase } from "@lib/paths";
 import "../styles/global.css";
 
 interface Props {
@@ -27,7 +28,7 @@ const description =
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <link rel="icon" href="/icons/medal.svg" type="image/svg+xml" />
+    <link rel="icon" href={withBase("/icons/medal.svg")} type="image/svg+xml" />
     <script is:inline>
       const savedTheme = localStorage.getItem("theme");
       const preferredDark = window.matchMedia(
@@ -60,19 +61,19 @@ const description =
         <div>
           <p class="font-bold">Explore</p>
           <ul class="mt-3 space-y-2 text-sm text-muted">
-            <li><a href="/awards">Awards</a></li>
-            <li><a href="/laureates">Laureates</a></li>
-            <li><a href="/timeline">Timeline</a></li>
-            <li><a href="/compare">Compare</a></li>
+            <li><a href={withBase("/awards")}>Awards</a></li>
+            <li><a href={withBase("/laureates")}>Laureates</a></li>
+            <li><a href={withBase("/timeline")}>Timeline</a></li>
+            <li><a href={withBase("/compare")}>Compare</a></li>
           </ul>
         </div>
         <div>
           <p class="font-bold">Trust</p>
           <ul class="mt-3 space-y-2 text-sm text-muted">
-            <li><a href="/methodology">Methodology</a></li>
-            <li><a href="/sources">Sources</a></li>
-            <li><a href="/contribute">Contribute</a></li>
-            <li><a href="/privacy">Privacy</a></li>
+            <li><a href={withBase("/methodology")}>Methodology</a></li>
+            <li><a href={withBase("/sources")}>Sources</a></li>
+            <li><a href={withBase("/contribute")}>Contribute</a></li>
+            <li><a href={withBase("/privacy")}>Privacy</a></li>
           </ul>
         </div>
       </div>

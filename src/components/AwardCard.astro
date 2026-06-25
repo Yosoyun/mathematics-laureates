@@ -1,6 +1,7 @@
 ---
 import CompletenessBadge from "@components/CompletenessBadge.astro";
 import type { Award } from "@data/schema";
+import { withBase } from "@lib/paths";
 
 interface Props {
   award: Award;
@@ -15,7 +16,7 @@ const { award } = Astro.props;
     <CompletenessBadge status={award.winnerListStatus} />
   </div>
   <h2 class="font-display text-3xl leading-none">
-    <a href={`/awards/${award.slug}`}>{award.name}</a>
+    <a href={withBase(`/awards/${award.slug}`)}>{award.name}</a>
   </h2>
   <p class="line-clamp-4 text-sm leading-6 text-muted">{award.description}</p>
   <dl class="mt-auto grid grid-cols-2 gap-3 text-sm">

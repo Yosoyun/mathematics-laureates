@@ -1,43 +1,55 @@
 ---
+import { Medal, MoonStar } from "lucide-astro";
 import SearchBox from "@components/SearchBox.astro";
 import { withBase } from "@lib/paths";
 ---
 
-<nav
-  class="sticky top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] backdrop-blur-xl"
->
+<nav class="nav-shell sticky top-0 z-50">
   <div class="container flex min-h-16 items-center justify-between gap-4 py-3">
     <a
       href={withBase("/")}
       class="flex items-center gap-3 font-bold"
       aria-label="The Laureate Equation home"
     >
-      <span
-        class="grid size-10 place-items-center rounded-lg bg-obsidian text-sm font-black text-ivory dark:bg-ivory dark:text-obsidian"
-        >LE</span
-      >
-      <span class="hidden sm:inline">The Laureate Equation</span>
+      <span class="brand-mark" aria-hidden="true"><Medal size={20} /></span>
+      <span class="hidden leading-tight sm:inline">
+        <span class="block text-sm uppercase tracking-[0.16em] text-muted"
+          >Archive</span
+        >
+        <span class="block">The Laureate Equation</span>
+      </span>
     </a>
-    <div class="hidden items-center gap-4 text-sm font-semibold lg:flex">
-      <a href={withBase("/awards")}>Awards</a>
-      <a href={withBase("/laureates")}>Laureates</a>
-      <a href={withBase("/fields")}>Fields</a>
-      <a href={withBase("/timeline")}>Timeline</a>
-      <a href={withBase("/world-map")}>Map</a>
-      <a href={withBase("/compare")}>Compare</a>
+    <div class="hidden items-center gap-1 text-sm font-semibold lg:flex">
+      <a class="nav-link" href={withBase("/awards")}>Awards</a>
+      <a class="nav-link" href={withBase("/laureates")}>Laureates</a>
+      <a class="nav-link" href={withBase("/fields")}>Fields</a>
+      <a class="nav-link" href={withBase("/timeline")}>Timeline</a>
+      <a class="nav-link" href={withBase("/world-map")}>Map</a>
+      <a class="nav-link" href={withBase("/compare")}>Compare</a>
     </div>
     <div class="flex items-center gap-2">
       <SearchBox compact />
       <button
-        class="no-print grid size-10 place-items-center rounded-lg border border-[var(--line)]"
+        class="icon-button no-print"
         type="button"
         data-theme-toggle
         aria-label="Toggle colour theme"
         title="Toggle theme"
       >
-        ◐
+        <MoonStar size={18} />
       </button>
     </div>
+  </div>
+  <div
+    class="no-print container flex gap-1 overflow-x-auto pb-3 text-xs font-bold lg:hidden"
+    aria-label="Mobile navigation"
+  >
+    <a class="nav-link shrink-0" href={withBase("/awards")}>Awards</a>
+    <a class="nav-link shrink-0" href={withBase("/laureates")}>Laureates</a>
+    <a class="nav-link shrink-0" href={withBase("/fields")}>Fields</a>
+    <a class="nav-link shrink-0" href={withBase("/timeline")}>Timeline</a>
+    <a class="nav-link shrink-0" href={withBase("/world-map")}>Map</a>
+    <a class="nav-link shrink-0" href={withBase("/compare")}>Compare</a>
   </div>
 </nav>
 

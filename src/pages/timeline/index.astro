@@ -26,18 +26,22 @@ const events = [
   title="Timeline"
   description="Timeline of mathematics award establishments and winner records."
 >
-  <section class="container py-14">
-    <p class="eyebrow">Timeline</p>
-    <h1 class="section-title mt-3">Awards, people, and eras</h1>
-    <p class="mt-5 max-w-3xl leading-7 text-muted">
-      The timeline has both a visual track and the accessible table below.
-      Records with partial data remain labelled through their linked award
-      pages.
-    </p>
-    <div class="mt-10 grid gap-4">
+  <section class="directory-hero py-14">
+    <div class="container relative z-10">
+      <p class="eyebrow">Timeline</p>
+      <h1 class="section-title mt-3">Awards, people, and eras</h1>
+      <p class="mt-5 max-w-3xl leading-7 text-muted">
+        The timeline has both a visual track and the accessible table below.
+        Records with partial data remain labelled through their linked award
+        pages.
+      </p>
+    </div>
+  </section>
+  <section class="container py-12">
+    <div class="grid gap-4">
       {
         events.map((event) => (
-          <article class="grid gap-3 border-l-2 border-[var(--accent)] py-2 pl-5 sm:grid-cols-[6rem_1fr]">
+          <article class="card grid gap-3 border-l-2 border-[var(--accent)] p-5 sm:grid-cols-[6rem_1fr]">
             <>
               <p class="font-display text-3xl">{event.year}</p>
               <div>

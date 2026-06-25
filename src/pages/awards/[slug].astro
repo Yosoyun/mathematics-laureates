@@ -19,72 +19,74 @@ const profiles = laureatesForAward(award.id);
 ---
 
 <BaseLayout title={award.name} description={award.description}>
-  <section class="container py-12">
-    <nav class="text-sm text-muted" aria-label="Breadcrumb">
-      <a href={withBase("/awards")}>Awards</a> / {award.name}
-    </nav>
-    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
-      <div>
-        <p class="eyebrow">{award.organisation}</p>
-        <h1 class="section-title mt-3">{award.name}</h1>
-        <div class="mt-5 flex flex-wrap gap-3">
-          <CompletenessBadge status={award.completenessStatus} />
-          <CompletenessBadge status={award.winnerListStatus} />
+  <section class="detail-hero py-12">
+    <div class="container relative z-10">
+      <nav class="text-sm text-muted" aria-label="Breadcrumb">
+        <a href={withBase("/awards")}>Awards</a> / {award.name}
+      </nav>
+      <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
+        <div>
+          <p class="eyebrow">{award.organisation}</p>
+          <h1 class="section-title mt-3">{award.name}</h1>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <CompletenessBadge status={award.completenessStatus} />
+            <CompletenessBadge status={award.winnerListStatus} />
+          </div>
+          <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
+            {award.description}
+          </p>
         </div>
-        <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
-          {award.description}
-        </p>
-      </div>
-      <div class="card p-5">
-        <h2 class="font-display text-2xl">Award facts</h2>
-        <dl class="mt-4 space-y-3 text-sm">
-          <div>
-            <dt class="font-bold">Established</dt><dd class="text-muted">
-              {award.establishedYear}
-            </dd>
-          </div>
-          <div>
-            <dt class="font-bold">Region</dt><dd class="text-muted">
-              {award.countryOrRegion}
-            </dd>
-          </div>
-          <div>
-            <dt class="font-bold">Frequency</dt><dd class="text-muted">
-              {award.frequency}
-            </dd>
-          </div>
-          <div>
-            <dt class="font-bold">Eligibility</dt><dd class="text-muted">
-              {award.eligibility}
-            </dd>
-          </div>
-          {
-            award.ageLimit && (
-              <div>
-                <>
-                  <dt class="font-bold">Age limit</dt>
-                  <dd class="text-muted">{award.ageLimit}</dd>
-                </>
-              </div>
-            )
-          }
-          {
-            award.prizeValue && (
-              <div>
-                <>
-                  <dt class="font-bold">Prize value</dt>
-                  <dd class="text-muted">
-                    {award.prizeValue.amount
-                      ? `${award.prizeValue.amount.toLocaleString()} ${award.prizeValue.currency}`
-                      : award.prizeValue.note}{" "}
-                    {award.prizeValue.referenceYear &&
-                      `(${award.prizeValue.referenceYear})`}
-                  </dd>
-                </>
-              </div>
-            )
-          }
-        </dl>
+        <div class="card p-5">
+          <h2 class="font-display text-2xl">Award facts</h2>
+          <dl class="mt-4 space-y-3 text-sm">
+            <div>
+              <dt class="font-bold">Established</dt><dd class="text-muted">
+                {award.establishedYear}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-bold">Region</dt><dd class="text-muted">
+                {award.countryOrRegion}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-bold">Frequency</dt><dd class="text-muted">
+                {award.frequency}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-bold">Eligibility</dt><dd class="text-muted">
+                {award.eligibility}
+              </dd>
+            </div>
+            {
+              award.ageLimit && (
+                <div>
+                  <>
+                    <dt class="font-bold">Age limit</dt>
+                    <dd class="text-muted">{award.ageLimit}</dd>
+                  </>
+                </div>
+              )
+            }
+            {
+              award.prizeValue && (
+                <div>
+                  <>
+                    <dt class="font-bold">Prize value</dt>
+                    <dd class="text-muted">
+                      {award.prizeValue.amount
+                        ? `${award.prizeValue.amount.toLocaleString()} ${award.prizeValue.currency}`
+                        : award.prizeValue.note}{" "}
+                      {award.prizeValue.referenceYear &&
+                        `(${award.prizeValue.referenceYear})`}
+                    </dd>
+                  </>
+                </div>
+              )
+            }
+          </dl>
+        </div>
       </div>
     </div>
   </section>

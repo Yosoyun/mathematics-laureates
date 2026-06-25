@@ -1,28 +1,34 @@
 ---
 interface Props {
   compact?: boolean;
+  featured?: boolean;
 }
 
 const compact = Astro.props.compact ?? false;
+const featured = Astro.props.featured ?? false;
+const rootClass = compact
+  ? "search-shell relative w-44 sm:w-64"
+  : featured
+    ? "search-shell search-shell-featured relative w-full"
+    : "search-shell relative w-full";
 ---
 
-<div
-  class={compact ? "relative w-44 sm:w-64" : "relative w-full"}
-  data-search-root
->
+<div class={rootClass} data-search-root>
   <label class="sr-only" for={compact ? "site-search-compact" : "site-search"}
     >Search awards, people, fields, years, and concepts</label
   >
   <input
     id={compact ? "site-search-compact" : "site-search"}
-    class="w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm"
+    class="search-input px-4 py-2 text-sm"
     type="search"
-    placeholder="Search archive"
+    placeholder={featured
+      ? "Search Fields Medal, Mirzakhani, geometry, 2022..."
+      : "Search archive"}
     autocomplete="off"
     data-search-input
   />
   <div
-    class="absolute right-0 top-[calc(100%+.5rem)] z-50 hidden max-h-96 w-[min(34rem,90vw)] overflow-auto rounded-lg border border-[var(--line)] bg-[var(--surface)] p-2 shadow-editorial"
+    class="search-panel absolute right-0 top-[calc(100%+.55rem)] z-50 hidden max-h-96 w-[min(34rem,90vw)] overflow-auto p-2"
     data-search-results
   >
   </div>
@@ -73,14 +79,16 @@ const compact = Astro.props.compact ?? false;
                 const safeTitle = escapeHtml(item.title);
                 const safeType = escapeHtml(item.type);
                 const safeUrl = escapeHtml(`${baseUrl}${item.url}`);
-                return `<a class="block rounded-md px-3 py-2 hover:bg-[var(--surface-muted)] focus:bg-[var(--surface-muted)]" href="${safeUrl}"><span class="text-xs uppercase tracking-wide text-muted">${safeType}</span><span class="block font-semibold">${safeTitle}</span></a>`;
+                return `<a class="search-result" href="${safeUrl}"><span class="text-xs font-bold uppercase tracking-wide text-muted">${safeType}</span><span class="block font-semibold">${safeTitle}</span></a>`;
               })
               .join("");
       panel.classList.remove("hidden");
     });
 
     input.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") panel.classList.add("hidden");
+      if (event.key === "Escape") {
+        panel.classList.add("hidden");
+      }
       if (event.key === "Enter") {
         const first = panel.querySelector("a");
         if (first instanceof HTMLAnchorElement) first.click();

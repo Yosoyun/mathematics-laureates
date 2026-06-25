@@ -1,4 +1,5 @@
 ---
+import { SlidersHorizontal } from "lucide-astro";
 import AwardCard from "@components/AwardCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { awards } from "@lib/catalog";
@@ -12,31 +13,45 @@ const categories = [
   title="Awards"
   description="Browse major mathematics and statistics awards with sourced metadata and transparent winner-list status."
 >
-  <section class="container py-14">
-    <p class="eyebrow">Awards directory</p>
-    <h1 class="section-title mt-3">Major mathematics and statistics awards</h1>
-    <p class="mt-5 max-w-3xl leading-7 text-muted">
-      Every required award is represented with official sources, route support,
-      metadata, and an explicit winner-list completeness label.
-    </p>
-    <div class="mt-8 flex flex-wrap gap-2" aria-label="Award category filters">
-      <button
-        class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
-        type="button"
-        data-award-filter="all">All</button
+  <section class="directory-hero py-14">
+    <div class="container relative z-10">
+      <p class="eyebrow">Awards directory</p>
+      <h1 class="section-title mt-3">
+        Major mathematics and statistics awards
+      </h1>
+      <p class="mt-5 max-w-3xl leading-7 text-muted">
+        Every required award is represented with official sources, route
+        support, metadata, and an explicit winner-list completeness label.
+      </p>
+      <div
+        class="filter-bar mt-8 flex flex-wrap items-center gap-2 p-3"
+        aria-label="Award category filters"
       >
-      {
-        categories.map((category) => (
-          <button
-            class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
-            type="button"
-            data-award-filter={category}
-          >
-            {category}
-          </button>
-        ))
-      }
+        <span class="mr-2 inline-flex items-center gap-2 text-sm font-bold">
+          <SlidersHorizontal size={16} /> Filter
+        </span>
+        <button
+          class="filter-pill"
+          type="button"
+          aria-pressed="true"
+          data-award-filter="all">All</button
+        >
+        {
+          categories.map((category) => (
+            <button
+              class="filter-pill"
+              type="button"
+              aria-pressed="false"
+              data-award-filter={category}
+            >
+              {category}
+            </button>
+          ))
+        }
+      </div>
     </div>
+  </section>
+  <section class="container py-12">
     <div class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3" data-award-grid>
       {
         awards.map((award) => (
@@ -53,6 +68,9 @@ const categories = [
     for (const button of buttons) {
       button.addEventListener("click", () => {
         const filter = button.getAttribute("data-award-filter");
+        for (const item of buttons) {
+          item.setAttribute("aria-pressed", item === button ? "true" : "false");
+        }
         for (const card of cards) {
           const categories = card.getAttribute("data-award-categories") ?? "";
           card.classList.toggle(

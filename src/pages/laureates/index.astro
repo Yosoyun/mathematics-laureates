@@ -1,4 +1,5 @@
 ---
+import { Search, SlidersHorizontal } from "lucide-astro";
 import LaureateCard from "@components/LaureateCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { fields, laureates } from "@lib/catalog";
@@ -13,31 +14,34 @@ const fieldOptions = fields.map((field) => ({
   title="Laureates"
   description="Browse sourced flagship profiles of mathematics and statistics laureates."
 >
-  <section class="container py-14">
-    <p class="eyebrow">Laureate directory</p>
-    <h1 class="section-title mt-3">People and research ideas</h1>
-    <p class="mt-5 max-w-3xl leading-7 text-muted">
-      Profiles separate award-cited mathematical impact from biographical
-      details that still need deeper source verification.
-    </p>
-    <div class="mt-8 grid gap-4 md:grid-cols-[1fr_18rem]">
+  <section class="directory-hero py-14">
+    <div class="container relative z-10">
+      <p class="eyebrow">Laureate directory</p>
+      <h1 class="section-title mt-3">People and research ideas</h1>
+      <p class="mt-5 max-w-3xl leading-7 text-muted">
+        Profiles separate award-cited mathematical impact from biographical
+        details that still need deeper source verification.
+      </p>
+    </div>
+  </section>
+  <section class="container py-12">
+    <div class="form-panel grid gap-4 p-4 md:grid-cols-[1fr_18rem]">
       <label class="block">
-        <span class="text-sm font-bold"
-          >Filter by name, field, or contribution</span
+        <span class="inline-flex items-center gap-2 text-sm font-bold"
+          ><Search size={16} /> Filter by name, field, or contribution</span
         >
         <input
-          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          class="input-field mt-2 w-full px-3 py-2"
           type="search"
           data-laureate-query
           placeholder="Try 'PDE', 'geometry', or 'Wiles'"
         />
       </label>
       <label class="block">
-        <span class="text-sm font-bold">Research field</span>
-        <select
-          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
-          data-laureate-field
+        <span class="inline-flex items-center gap-2 text-sm font-bold"
+          ><SlidersHorizontal size={16} /> Research field</span
         >
+        <select class="input-field mt-2 w-full px-3 py-2" data-laureate-field>
           <option value="all">All fields</option>
           {
             fieldOptions.map((field) => (

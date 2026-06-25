@@ -1,9 +1,16 @@
 ---
+import {
+  ArrowRight,
+  BookOpen,
+  Compass,
+  MapPinned,
+  Sparkles,
+} from "lucide-astro";
 import AwardCard from "@components/AwardCard.astro";
 import LaureateCard from "@components/LaureateCard.astro";
 import SearchBox from "@components/SearchBox.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { awards, fields, laureates, winnerRecords } from "@lib/catalog";
+import { awards, laureates, winnerRecords } from "@lib/catalog";
 import { withBase } from "@lib/paths";
 
 const featuredAwards = awards.slice(0, 6);
@@ -15,64 +22,57 @@ const recentWinners = [...winnerRecords]
 
 <BaseLayout title="The Minds, Ideas and Honours That Shaped Mathematics">
   <section
-    class="container grid items-center gap-10 py-12 lg:grid-cols-[1.05fr_.95fr] lg:py-14"
+    class="hero-shell"
+    style={`--hero-image: url("${withBase("/images/laureate-hero.jpg")}")`}
   >
-    <div>
-      <p class="eyebrow">Global mathematics awards archive</p>
-      <h1 class="display-title mt-5">
-        The Minds, Ideas and Honours That Shaped Mathematics
-      </h1>
-      <p class="mt-7 max-w-2xl text-xl leading-8 text-muted">
-        Explore the world's major mathematics and statistics awards, the people
-        who earned them, and the ideas that transformed human knowledge.
-      </p>
-      <div class="mt-8 max-w-2xl">
-        <SearchBox />
-      </div>
-      <div class="mt-8 flex flex-wrap gap-3 text-sm font-bold">
-        <a
-          class="rounded-lg bg-obsidian px-5 py-3 text-ivory dark:bg-ivory dark:text-obsidian"
-          href={withBase("/awards")}>Browse awards</a
-        >
-        <a
-          class="rounded-lg border border-[var(--line)] px-5 py-3"
-          href={withBase("/methodology")}>Read methodology</a
-        >
-      </div>
-    </div>
-    <div class="grid gap-4">
-      <div class="card p-6">
-        <p class="eyebrow">Data transparency</p>
-        <p class="mt-4 font-display text-4xl leading-none">
-          {awards.length} awards, {laureates.length} profiles
+    <div class="hero-content container">
+      <div class="hero-copy">
+        <p class="eyebrow">Global mathematics awards archive</p>
+        <h1 class="display-title mt-5">
+          The Minds, Ideas and Honours That Shaped Mathematics
+        </h1>
+        <p class="mt-7 max-w-2xl text-xl leading-8 text-[#f2e6d1]">
+          Explore the world's major mathematics and statistics awards, the
+          people who earned them, and the ideas that transformed human
+          knowledge.
         </p>
-        <p class="mt-4 text-sm leading-6 text-muted">
-          Winner lists and biographies carry completeness labels. Partial
-          datasets are not labelled complete.
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="card p-5">
-          <p class="text-3xl font-bold">{fields.length}</p>
-          <p class="text-sm text-muted">research fields</p>
+        <div class="hero-search mt-8">
+          <SearchBox featured />
         </div>
-        <div class="card p-5">
-          <p class="text-3xl font-bold">{winnerRecords.length}</p>
-          <p class="text-sm text-muted">winner records</p>
+        <div class="hero-actions mt-8">
+          <a class="btn-primary" href={withBase("/awards")}
+            >Browse awards <ArrowRight size={17} /></a
+          >
+          <a class="btn-secondary" href={withBase("/methodology")}
+            >Read methodology <BookOpen size={17} /></a
+          >
+        </div>
+      </div>
+      <div class="hero-stats" aria-label="Archive metrics">
+        <div class="hero-stat">
+          <strong>{awards.length}</strong>
+          <span>major awards</span>
+        </div>
+        <div class="hero-stat">
+          <strong>{laureates.length}</strong>
+          <span>flagship profiles</span>
+        </div>
+        <div class="hero-stat">
+          <strong>{winnerRecords.length}</strong>
+          <span>winner records</span>
         </div>
       </div>
     </div>
   </section>
 
   <section class="container py-12">
-    <div class="mb-8 flex items-end justify-between gap-4">
+    <div class="section-heading">
       <div>
         <p class="eyebrow">Awards</p>
         <h2 class="section-title mt-3">Featured honours</h2>
       </div>
-      <a
-        class="text-sm font-bold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
-        href={withBase("/awards")}>All awards</a
+      <a class="section-link" href={withBase("/awards")}
+        >All awards <ArrowRight size={15} /></a
       >
     </div>
     <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -81,14 +81,13 @@ const recentWinners = [...winnerRecords]
   </section>
 
   <section class="container py-12">
-    <div class="mb-8 flex items-end justify-between gap-4">
+    <div class="section-heading">
       <div>
         <p class="eyebrow">Laureates</p>
         <h2 class="section-title mt-3">Flagship profiles</h2>
       </div>
-      <a
-        class="text-sm font-bold underline decoration-[var(--accent)] decoration-2 underline-offset-4"
-        href={withBase("/laureates")}>All profiles</a
+      <a class="section-link" href={withBase("/laureates")}
+        >All profiles <ArrowRight size={15} /></a
       >
     </div>
     <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -100,7 +99,7 @@ const recentWinners = [...winnerRecords]
     </div>
   </section>
 
-  <section class="container grid gap-8 py-12 lg:grid-cols-[.9fr_1.1fr]">
+  <section class="container grid gap-8 py-12 lg:grid-cols-[.82fr_1.18fr]">
     <div>
       <p class="eyebrow">Timeline preview</p>
       <h2 class="section-title mt-3">Recent records</h2>
@@ -108,17 +107,18 @@ const recentWinners = [...winnerRecords]
         Use the full timeline to trace award creation, prize years, laureates,
         and research eras with an accessible text alternative.
       </p>
-      <a
-        class="mt-6 inline-flex rounded-lg border border-[var(--line)] px-5 py-3 text-sm font-bold"
-        href={withBase("/timeline")}>Open timeline</a
+      <a class="btn-quiet mt-6" href={withBase("/timeline")}
+        >Open timeline <ArrowRight size={16} /></a
       >
     </div>
-    <ol class="card divide-y divide-[var(--line)]">
+    <ol class="timeline-panel card divide-y divide-[var(--line)]">
       {
         recentWinners.map((record) => (
-          <li class="grid gap-2 p-4 sm:grid-cols-[5rem_1fr]">
+          <li class="grid gap-3 p-4 sm:grid-cols-[5rem_1fr]">
             <>
-              <span class="font-display text-2xl">{record.year}</span>
+              <span class="font-display text-3xl leading-none">
+                {record.year}
+              </span>
               <span>{record.recipientNames.join(", ")}</span>
             </>
           </li>
@@ -128,19 +128,22 @@ const recentWinners = [...winnerRecords]
   </section>
 
   <section class="container grid gap-5 py-12 md:grid-cols-3">
-    <a class="card p-6" href={withBase("/fields")}>
+    <a class="feature-link card p-6" href={withBase("/fields")}>
+      <Compass class="mb-5 text-[var(--accent-cool)]" size={28} />
       <p class="eyebrow">Research-field explorer</p>
       <h2 class="mt-4 font-display text-3xl">
         From algebra to information science
       </h2>
     </a>
-    <a class="card p-6" href={withBase("/world-map")}>
+    <a class="feature-link card p-6" href={withBase("/world-map")}>
+      <MapPinned class="mb-5 text-[var(--accent-warm)]" size={28} />
       <p class="eyebrow">Global map</p>
       <h2 class="mt-4 font-display text-3xl">
         Separate birthplace, affiliation, institution, and award country
       </h2>
     </a>
-    <a class="card p-6" href={withBase("/inspiration")}>
+    <a class="feature-link card p-6" href={withBase("/inspiration")}>
+      <Sparkles class="mb-5 text-[var(--accent)]" size={28} />
       <p class="eyebrow">Pathways</p>
       <h2 class="mt-4 font-display text-3xl">Path to Mathematical Greatness</h2>
     </a>

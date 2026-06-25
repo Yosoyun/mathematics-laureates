@@ -28,7 +28,19 @@ const description =
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#111315" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;600;700;800;900&family=STIX+Two+Text:wght@500;600&display=swap"
+    />
     <link rel="icon" href={withBase("/icons/medal.svg")} type="image/svg+xml" />
+    <link
+      rel="preload"
+      as="image"
+      href={withBase("/images/laureate-hero.jpg")}
+    />
     <script is:inline>
       const savedTheme = localStorage.getItem("theme");
       const preferredDark = window.matchMedia(
@@ -48,10 +60,13 @@ const description =
     <main id="main">
       <slot />
     </main>
-    <footer class="mt-24 border-t border-[var(--line)] py-12">
-      <div class="container grid gap-8 md:grid-cols-[1.2fr_.8fr_.8fr]">
+    <footer class="mt-24 border-t border-[var(--line)] py-14">
+      <div class="container grid gap-10 md:grid-cols-[1.25fr_.8fr_.8fr]">
         <div>
-          <p class="font-display text-3xl">The Laureate Equation</p>
+          <p class="eyebrow">Sourced mathematical culture</p>
+          <p class="mt-3 font-display text-4xl leading-none">
+            The Laureate Equation
+          </p>
           <p class="mt-3 max-w-xl text-sm leading-6 text-muted">
             An open, static, source-conscious archive of mathematics and
             statistics awards. Incomplete records are labelled plainly so the
@@ -59,7 +74,7 @@ const description =
           </p>
         </div>
         <div>
-          <p class="font-bold">Explore</p>
+          <p class="font-bold uppercase tracking-[0.14em]">Explore</p>
           <ul class="mt-3 space-y-2 text-sm text-muted">
             <li><a href={withBase("/awards")}>Awards</a></li>
             <li><a href={withBase("/laureates")}>Laureates</a></li>
@@ -68,7 +83,7 @@ const description =
           </ul>
         </div>
         <div>
-          <p class="font-bold">Trust</p>
+          <p class="font-bold uppercase tracking-[0.14em]">Trust</p>
           <ul class="mt-3 space-y-2 text-sm text-muted">
             <li><a href={withBase("/methodology")}>Methodology</a></li>
             <li><a href={withBase("/sources")}>Sources</a></li>

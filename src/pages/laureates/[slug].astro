@@ -31,41 +31,43 @@ const allSourceIds = [
   title={laureate.fullName}
   description={laureate.majorContributions[0]}
 >
-  <section class="container py-12">
-    <nav class="text-sm text-muted" aria-label="Breadcrumb">
-      <a href={withBase("/laureates")}>Laureates</a> / {laureate.fullName}
-    </nav>
-    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
-      <div>
-        <p class="eyebrow">Laureate profile</p>
-        <h1 class="section-title mt-3">{laureate.fullName}</h1>
-        <div class="mt-5 flex flex-wrap gap-3">
-          <CompletenessBadge status={laureate.completenessStatus} />
-          {
-            laureate.researchFieldIds.map((fieldId) => (
-              <a
-                class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-sm font-bold"
-                href={withBase(`/fields/${fields.get(fieldId)?.slug}`)}
-              >
-                {fields.get(fieldId)?.name}
-              </a>
-            ))
-          }
+  <section class="detail-hero py-12">
+    <div class="container relative z-10">
+      <nav class="text-sm text-muted" aria-label="Breadcrumb">
+        <a href={withBase("/laureates")}>Laureates</a> / {laureate.fullName}
+      </nav>
+      <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
+        <div>
+          <p class="eyebrow">Laureate profile</p>
+          <h1 class="section-title mt-3">{laureate.fullName}</h1>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <CompletenessBadge status={laureate.completenessStatus} />
+            {
+              laureate.researchFieldIds.map((fieldId) => (
+                <a
+                  class="field-chip"
+                  href={withBase(`/fields/${fields.get(fieldId)?.slug}`)}
+                >
+                  {fields.get(fieldId)?.name}
+                </a>
+              ))
+            }
+          </div>
+          <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
+            {laureate.biography}
+          </p>
         </div>
-        <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
-          {laureate.biography}
-        </p>
-      </div>
-      <div class="card p-5">
-        <div
-          class="grid aspect-square place-items-center rounded-lg bg-[var(--surface-muted)] font-display text-7xl"
-          aria-label={`Missing portrait placeholder for ${laureate.fullName}`}
-        >
-          {laureate.fullName.slice(0, 1)}
+        <div class="card p-5">
+          <div
+            class="portrait-placeholder grid aspect-square place-items-center rounded-lg font-display text-8xl"
+            aria-label={`Missing portrait placeholder for ${laureate.fullName}`}
+          >
+            {laureate.fullName.slice(0, 1)}
+          </div>
+          <p class="mt-4 text-sm text-muted">
+            Portrait omitted until licence metadata is verified.
+          </p>
         </div>
-        <p class="mt-4 text-sm text-muted">
-          Portrait omitted until licence metadata is verified.
-        </p>
       </div>
     </div>
   </section>

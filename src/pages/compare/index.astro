@@ -38,18 +38,22 @@ const laureatePayload = laureates.map((laureate) => ({
   title="Compare"
   description="Compare awards and laureates without subjective rankings."
 >
-  <section class="container py-14">
-    <p class="eyebrow">Comparison tool</p>
-    <h1 class="section-title mt-3">Compare records, not human worth</h1>
-    <p class="mt-5 max-w-3xl leading-7 text-muted">
-      This tool compares factual metadata such as eligibility, frequency,
-      fields, institutions, and completeness status. It does not rank
-      mathematicians.
-    </p>
-    <div class="mt-8 grid gap-4 md:grid-cols-3">
+  <section class="directory-hero py-14">
+    <div class="container relative z-10">
+      <p class="eyebrow">Comparison tool</p>
+      <h1 class="section-title mt-3">Compare records, not human worth</h1>
+      <p class="mt-5 max-w-3xl leading-7 text-muted">
+        This tool compares factual metadata such as eligibility, frequency,
+        fields, institutions, and completeness status. It does not rank
+        mathematicians.
+      </p>
+    </div>
+  </section>
+  <section class="container py-12">
+    <div class="form-panel grid gap-4 p-4 md:grid-cols-3">
       <label
         ><span class="text-sm font-bold">Mode</span><select
-          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          class="input-field mt-2 w-full px-3 py-2"
           data-compare-mode
           ><option value="awards">Awards</option><option value="laureates"
             >Laureates</option
@@ -58,12 +62,12 @@ const laureatePayload = laureates.map((laureate) => ({
       >
       <label
         ><span class="text-sm font-bold">First record</span><select
-          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          class="input-field mt-2 w-full px-3 py-2"
           data-compare-a></select></label
       >
       <label
         ><span class="text-sm font-bold">Second record</span><select
-          class="mt-2 w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2"
+          class="input-field mt-2 w-full px-3 py-2"
           data-compare-b></select></label
       >
     </div>

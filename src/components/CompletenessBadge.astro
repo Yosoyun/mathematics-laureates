@@ -15,8 +15,6 @@ const labels: Record<CompletenessStatus, string> = {
 const status = Astro.props.status;
 ---
 
-<span
-  class="inline-flex items-center rounded-full border border-[var(--line)] px-3 py-1 text-xs font-bold uppercase tracking-wide text-muted"
->
+<span class={`status-badge status-${status}`}>
   {labels[status]}
 </span>

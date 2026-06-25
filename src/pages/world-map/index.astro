@@ -95,17 +95,21 @@ const markerData = [
   title="World Map"
   description="Geographic exploration with separate award organisation and institution views."
 >
-  <section class="container py-14">
-    <p class="eyebrow">World map</p>
-    <h1 class="section-title mt-3">Geography without conflation</h1>
-    <p class="mt-5 max-w-3xl leading-7 text-muted">
-      The map separates award organisation region from working institution.
-      Birthplace and national affiliation require deeper source verification
-      before being plotted.
-    </p>
+  <section class="directory-hero py-14">
+    <div class="container relative z-10">
+      <p class="eyebrow">World map</p>
+      <h1 class="section-title mt-3">Geography without conflation</h1>
+      <p class="mt-5 max-w-3xl leading-7 text-muted">
+        The map separates award organisation region from working institution.
+        Birthplace and national affiliation require deeper source verification
+        before being plotted.
+      </p>
+    </div>
+  </section>
+  <section class="container py-12">
     <div
       id="map"
-      class="mt-8 h-[32rem] rounded-lg border border-[var(--line)]"
+      class="h-[34rem] overflow-hidden rounded-lg border border-[var(--line)] shadow-editorial"
       data-markers={JSON.stringify(markerData)}
     >
     </div>

@@ -18,19 +18,21 @@ const awards = awardsForField(field.id);
 ---
 
 <BaseLayout title={field.name} description={field.summary}>
-  <section class="container py-12">
-    <nav class="text-sm text-muted" aria-label="Breadcrumb">
-      <a href={withBase("/fields")}>Fields</a> / {field.name}
-    </nav>
-    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
-      <div>
-        <p class="eyebrow">Research field</p>
-        <h1 class="section-title mt-3">{field.name}</h1>
-        <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
-          {field.summary}
-        </p>
+  <section class="detail-hero py-12">
+    <div class="container relative z-10">
+      <nav class="text-sm text-muted" aria-label="Breadcrumb">
+        <a href={withBase("/fields")}>Fields</a> / {field.name}
+      </nav>
+      <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
+        <div>
+          <p class="eyebrow">Research field</p>
+          <h1 class="section-title mt-3">{field.name}</h1>
+          <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">
+            {field.summary}
+          </p>
+        </div>
+        <SourcePanel sourceIds={field.sourceIds} title="Field source" />
       </div>
-      <SourcePanel sourceIds={field.sourceIds} title="Field source" />
     </div>
   </section>
   <section class="container grid gap-8 py-8 lg:grid-cols-2">
@@ -47,10 +49,7 @@ const awards = awardsForField(field.id);
           field.relatedFieldIds?.map((fieldId) => {
             const related = fields.find((item) => item.id === fieldId);
             return related ? (
-              <a
-                class="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-sm font-bold"
-                href={withBase(`/fields/${related.slug}`)}
-              >
+              <a class="field-chip" href={withBase(`/fields/${related.slug}`)}>
                 {related.name}
               </a>
             ) : null;
@@ -70,10 +69,7 @@ const awards = awardsForField(field.id);
     <div class="mt-5 flex flex-wrap gap-2">
       {
         awards.map((award) => (
-          <a
-            class="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold"
-            href={withBase(`/awards/${award.slug}`)}
-          >
+          <a class="filter-pill" href={withBase(`/awards/${award.slug}`)}>
             {award.name}
           </a>
         ))
